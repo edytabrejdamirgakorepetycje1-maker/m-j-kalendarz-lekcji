@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6d5dfc">
+<title>Mój Kalendarz Lekcji</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Mój Kalendarz">
+<style>
+:root{--bg:#f5f6fb;--panel:#fff;--text:#22243a;--muted:#74778b;--border:#e5e6ef;--primary:#6d5dfc;--shadow:0 10px 30px rgba(40,40,80,.08);--radius:18px}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:flex}
+.sidebar{width:270px;background:#fff;border-right:1px solid var(--border);padding:22px 18px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#7b6cff,#5143d8);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand h1{font-size:18px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:2px 0 0}.nav button{width:100%;border:0;background:none;padding:12px 14px;border-radius:12px;text-align:left;color:#55586c;margin:3px 0}.nav button.active,.nav button:hover{background:#f1efff;color:var(--primary);font-weight:600}
+.side-section{margin-top:26px}.side-title{font-size:11px;color:#999cad;text-transform:uppercase;letter-spacing:.08em;margin:0 8px 10px}.legend-item{display:flex;align-items:center;gap:8px;padding:8px 7px;color:#616477;font-size:13px}.dot{width:10px;height:10px;border-radius:50%}
+main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.title-row{display:flex;align-items:center;gap:12px}.title-row h2{margin:0;font-size:25px}.today,.secondary{border:1px solid var(--border);background:#fff;border-radius:11px;padding:9px 12px;color:#45485b}.actions{display:flex;gap:8px}.primary{background:var(--primary);color:#fff;border:0;border-radius:12px;padding:11px 15px;font-weight:650}
+.grid-area{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.calendar-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border)}.cal-nav{display:flex;gap:7px;align-items:center}.cal-nav button{width:38px;height:38px;border:1px solid var(--border);background:#fff;border-radius:10px}.view-switch{display:flex;gap:3px;background:#f1f1f7;padding:3px;border-radius:11px}.view-switch button{border:0;background:transparent;padding:7px 12px;border-radius:8px;color:#626578}.view-switch button.active{background:#fff;color:var(--primary);font-weight:700;box-shadow:0 2px 7px #ddd}
+.week-calendar{display:grid;grid-template-columns:62px repeat(7,1fr);min-width:780px}.week-calendar .head{padding:10px 6px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);font-weight:650}.week-calendar .head.today-head{color:var(--primary);background:#faf9ff}.time-cell{height:64px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-size:10px;color:#9a9cac;text-align:center;padding-top:7px}.day-cell{height:64px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;background:linear-gradient(to bottom,transparent 31px,#f0f1f5 32px,transparent 33px)}.day-cell:nth-child(8n){border-right:0}.event{position:absolute;left:3px;right:3px;border-radius:9px;padding:5px 6px;color:#fff;font-size:10px;line-height:1.2;z-index:2;overflow:hidden;box-shadow:0 3px 8px rgba(0,0,0,.12);border-left:4px solid rgba(255,255,255,.75)}.event strong{display:block;font-size:11px}.event .sub{opacity:.92;margin-top:2px}.event.paid{outline:2px solid rgba(255,255,255,.35)}.event.cancelled{opacity:.48;text-decoration:line-through}.now-line{position:absolute;left:0;right:0;height:2px;background:#f04b5f;z-index:3}
+.page{display:none}.page.active{display:block}.student-list{display:grid;gap:10px}.student-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:15px;display:flex;justify-content:space-between;align-items:center;gap:10px}.student-main{display:flex;align-items:center;gap:12px}.avatar{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#eeecff;color:#5d4fe8;font-weight:750}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:700}.paid{background:#e8f8ef;color:#17834d}.unpaid{background:#fff0ee;color:#bb4a37}.cancel{background:#f0f0f4;color:#777}.details{color:var(--muted);font-size:12px;margin-top:2px}.search{background:#fff;border:1px solid var(--border);border-radius:11px;padding:10px 12px;width:min(280px,50vw)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:15px}.stat .num{font-size:24px;font-weight:760}.stat .lbl{font-size:12px;color:var(--muted)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(20,22,35,.45);z-index:10;padding:18px;overflow:auto}.overlay.open{display:flex;align-items:center;justify-content:center}.modal{width:min(780px,100%);background:#fff;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden}.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font-size:19px}.close{border:0;background:#f3f3f8;border-radius:10px;width:36px;height:36px}.modal-body{padding:20px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);font-weight:600}.field input,.field select,.field textarea{border:1px solid var(--border);border-radius:11px;padding:11px 12px;outline:0;background:#fbfbfe}.field input:focus,.field select:focus,.field textarea:focus{border-color:#b6afff;box-shadow:0 0 0 3px #eeeaff}.modal-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:8px}.danger{background:#fff1f1;color:#b33a3a;border:1px solid #ffd6d6;border-radius:10px;padding:10px 13px}
+.summary-box{background:#f8f8fc;border-radius:14px;padding:14px;margin-top:14px}.money{font-size:18px;font-weight:750}.quick-pay{border:0;background:#e9f8ef;color:#17834d;border-radius:9px;padding:6px 9px;font-weight:700;font-size:11px}.lesson-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}.lesson-row:last-child{border-bottom:0}
+.mobile-nav{display:none}
+@media(max-width:850px){.sidebar{display:none}.mobile-nav{display:flex;position:fixed;bottom:10px;left:10px;right:10px;background:#fff;border:1px solid var(--border);border-radius:17px;padding:7px;z-index:8;box-shadow:var(--shadow)}.mobile-nav button{flex:1;border:0;background:none;padding:9px;border-radius:11px;color:var(--muted);font-size:12px}.mobile-nav button.active{background:#f0eeff;color:var(--primary);font-weight:700}main{padding:14px 14px 85px}.topbar{align-items:flex-start}.actions .secondary{display:none}.week-calendar{grid-template-columns:45px repeat(7,1fr)}.week-calendar-wrap{overflow-x:auto}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.stat-grid{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:auto}.search{width:48vw}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">M</div><div><h1>Mój Kalendarz</h1><p>Lekcje i uczniowie</p></div></div>
+    <nav class="nav">
+      <button id="navCalendar" class="active" onclick="showPage('calendar')">📅 Kalendarz</button>
+      <button id="navStudents" onclick="showPage('students')">👩‍🎓 Uczniowie</button>
+    </nav>
+    <div class="side-section">
+      <div class="side-title">Kolory spotkań</div>
+      <div class="legend-item"><span class="dot" style="background:#6d5dfc"></span>Matematyka</div>
+      <div class="legend-item"><span class="dot" style="background:#1fa67a"></span>Fizyka</div>
+      <div class="legend-item"><span class="dot" style="background:#e38a23"></span>Chemia</div>
+      <div class="legend-item"><span class="dot" style="background:#d95776"></span>Inne</div>
+    </div>
+  </aside>
+  <main>
+    <section id="calendarPage" class="page active">
+  <div class="topbar">
+    <div class="title-row"><button class="today" onclick="goToday()">Dziś</button><h2 id="weekTitle"></h2></div>
+    <div class="actions"><button class="secondary" onclick="exportData()">Eksport danych</button><button class="primary" onclick="openEventModal()">＋ Nowa lekcja</button></div>
+  </div>
+  <div class="grid-area">
+    <div class="calendar-head">
+      <div class="cal-nav"><button onclick="changeWeek(-1)">‹</button><button onclick="changeWeek(1)">›</button></div>
+      <div class="view-switch"><button class="active" onclick="setCalendarView('week')">Tydzień</button><button onclick="setCalendarView('month')">Miesiąc</button></div>
+    </div>
+    <div id="calendarContainer" class="week-calendar-wrap"></div>
+  </div>
+</section>
+<section id="studentsPage" class="page">
+      <div class="topbar">
+        <div><h2>Uczniowie</h2><div class="details">Kliknij ucznia, aby zobaczyć szczegóły i płatności.</div></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input id="studentSearch" class="search" placeholder="🔎 Szukaj ucznia..." oninput="renderStudents()"><button class="secondary" onclick="openPaymentPanel()">💰 Płatności</button><button class="secondary" onclick="importData()">↥ Import kopii</button><button class="primary" onclick="openStudentModal()">＋ Nowy uczeń</button></div>
+      </div>
+      <div id="stats" class="stat-grid"></div><div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"><button class="secondary" onclick="showMonthlyReport()">📊 Rozliczenie miesiąca</button><button class="secondary" onclick="printReport()">🖨️ Drukuj / zapisz PDF</button><span class="details" style="align-self:center">💾 Dane zapisują się automatycznie na tym urządzeniu.</span></div>
+      <div id="studentList" class="student-list"></div>
+    </section>
+  </main>
+</div>
+
+<div class="mobile-nav">
+  <button id="mNavCalendar" class="active" onclick="showPage('calendar')">📅<br>Kalendarz</button>
+  <button id="mNavStudents" onclick="showPage('students')">👩‍🎓<br>Uczniowie</button>
+</div>
+
+<div id="eventOverlay" class="overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="eventModalTitle">Nowa lekcja</h3><button class="close" onclick="closeModal('eventOverlay')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>Uczeń</label><select id="eStudent"></select></div>
+        <div class="field"><label>Przedmiot / kolor</label><select id="eSubject"><option value="Matematyka">Matematyka</option><option value="Fizyka">Fizyka</option><option value="Chemia">Chemia</option><option value="Inne">Inne</option></select></div>
+        <div class="field"><label>Data</label><input id="eDate" type="date"></div>
+        <div class="field"><label>Godzina</label><input id="eTime" type="time"></div>
+        <div class="field"><label>Czas trwania (min)</label><input id="eDuration" type="number" min="15" step="15" value="60"></div>
+        <div class="field"><label>Powtarzanie</label><select id="eRepeat"><option value="none">Jednorazowo</option><option value="weekly">Co tydzień</option><option value="biweekly">Co 2 tygodnie</option><option value="monthly">Co miesiąc</option></select></div>
+        <div class="field"><label>Płatność</label><select id="ePaid"><option value="unpaid">Nieopłacone</option><option value="paid">Opłacone</option></select></div>
+        <div class="field"><label>Status lekcji</label><select id="eStatus"><option value="scheduled">Zaplanowana</option><option value="cancelled">Odwołana</option></select></div>
+        <div class="field"><label>Cena za lekcję (zł)</label><input id="ePrice" type="number" min="0" step="1" value="100"></div>
+        <div class="field full"><label>Notatka</label><textarea id="eNote" rows="3" placeholder="Np. zadania do zrobienia..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot"><div style="display:flex;gap:7px"><button id="eventDelete" class="danger" style="display:none" onclick="deleteEvent()">Usuń lekcję</button><button id="eventQuickPaid" class="quick-pay" style="display:none" onclick="markEventPaid()">✓ Oznacz jako opłaconą</button></div><div style="margin-left:auto;display:flex;gap:8px"><button class="secondary" onclick="closeModal('eventOverlay')">Anuluj</button><button class="primary" onclick="saveEvent()">Zapisz lekcję</button></div></div>
+  </div>
+</div>
+
+<div id="studentOverlay" class="overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="studentModalTitle">Nowy uczeń</h3><button class="close" onclick="closeModal('studentOverlay')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>Imię i nazwisko</label><input id="sName" type="text" placeholder="np. Anna Kowalska"></div>
+        <div class="field"><label>Telefon</label><input id="sPhone" type="tel"></div>
+        <div class="field"><label>E-mail</label><input id="sEmail" type="email"></div>
+        <div class="field"><label>Szkoła / klasa</label><input id="sClass" type="text" placeholder="np. klasa 8"></div>
+        <div class="field"><label>Domyślna cena (zł)</label><input id="sPrice" type="number" min="0" step="1" value="100"></div>
+        <div class="field"><label>Notatka o uczniu</label><input id="sNote" type="text" placeholder="np. przygotowanie do konkursu"></div>
+      </div>
+      <div id="studentSummary" style="margin-top:18px"></div>
+    </div>
+    <div class="modal-foot"><button id="studentDelete" class="danger" style="display:none" onclick="deleteStudent()">Usuń ucznia</button><div style="margin-left:auto;display:flex;gap:8px"><button class="secondary" onclick="closeModal('studentOverlay')">Anuluj</button><button class="primary" onclick="saveStudent()">Zapisz ucznia</button></div></div>
+  </div>
+</div>
+
+<div id="paymentOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>💰 Płatności</h3><button class="close" onclick="closeModal('paymentOverlay')">✕</button></div><div class="modal-body" id="paymentBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('paymentOverlay')">Zamknij</button></div></div></div><div id="reportOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>Rozliczenie miesiąca</h3><button class="close" onclick="closeModal('reportOverlay')">✕</button></div><div class="modal-body" id="reportBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('reportOverlay')">Zamknij</button><button class="primary" onclick="printReport()">🖨️ Drukuj / PDF</button></div></div></div><script>
+const COLORS={Matematyka:'#6d5dfc',Fizyka:'#1fa67a',Chemia:'#e38a23',Inne:'#d95776'};
+const KEY='moj_kalendarz_uczniow_v2';
+let data={students:[],events:[]};
+try { data=JSON.parse(localStorage.getItem(KEY)||'null')||data; } catch(e) { console.warn('Local storage unavailable; using in-memory data.'); }
+function persist(){ try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){console.warn('Storage unavailable. Data remains for this session.');} }
+let current=new Date(),editEventId=null,editStudentId=null,calendarView='week';
+function saveData(){persist()}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function todayStr(){return new Date().toISOString().slice(0,10)}
+function getStudent(id){return data.students.find(s=>s.id===id)}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtDate(s){return new Date(s+'T12:00:00').toLocaleDateString('pl-PL',{day:'2-digit',month:'2-digit',year:'numeric'})}
+function mondayOf(d){let x=new Date(d);x.setHours(12,0,0,0);let n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);return x}
+function weekLabel(d){let a=mondayOf(d),b=new Date(a);b.setDate(b.getDate()+6);return a.toLocaleDateString('pl-PL',{day:'numeric',month:'long'})+' – '+b.toLocaleDateString('pl-PL',{day:'numeric',month:'long',year:'numeric'})}
+function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(page+'Page').classList.add('active');document.querySelectorAll('.nav button,.mobile-nav button').forEach(b=>b.classList.remove('active'));document.getElementById(page==='calendar'?'navCalendar':'navStudents').classList.add('active');document.getElementById(page==='calendar'?'mNavCalendar':'mNavStudents').classList.add('active');page==='students'?renderStudents():renderCalendar()}
+function goToday(){current=new Date();renderCalendar()}
+function changeWeek(n){current=new Date(current);current.setDate(current.getDate()+n*7);renderCalendar()}
+function setCalendarView(v){calendarView=v;renderCalendar()}
+function quickPay(id){
+ const e=data.events.find(x=>x.id===id);if(!e)return;e.paid='paid';saveData();renderStudents();renderCalendar();if(editStudentId)openStudentModal(editStudentId);
+}
+function markEventPaid(){
+ if(!editEventId)return;quickPay(editEventId);closeModal('eventOverlay');
+}
+function openPaymentPanel(){
+ const unpaid=data.events.filter(e=>e.paid!=='paid'&&e.status!=='cancelled').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ const total=unpaid.reduce((a,e)=>a+Number(e.price||0),0);
+ document.getElementById('paymentBody').innerHTML=`<div class="summary-box"><div class="details">Łącznie do zapłaty</div><div class="money">${total} zł</div><div class="details" style="margin-top:4px">${unpaid.length} nieopłaconych lekcji</div></div>`+
+ (unpaid.length?unpaid.map(e=>{let s=getStudent(e.studentId);return `<div class="lesson-row"><span><b>${esc(s?.name||'')}</b><br>${fmtDate(e.date)} ${e.time||''} · ${esc(e.subject)} · ${Number(e.price||0)} zł</span><button class="quick-pay" onclick="quickPay('${e.id}');openPaymentPanel()">✓ Zapłacone</button></div>`}).join(''):'<div class="empty-state">Wszystkie lekcje są opłacone 🎉</div>');
+ document.getElementById('paymentOverlay').classList.add('open')
+}
+function importData(){
+ const input=document.createElement('input');input.type='file';input.accept='.json,application/json';
+ input.onchange=()=>{const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.students)||!Array.isArray(x.events))throw Error();if(confirm('Import zastąpi obecną bazę danych. Kontynuować?')){data=x;saveData();renderStudents();renderCalendar();alert('Kopia została zaimportowana.')}}catch{alert('Nieprawidłowy plik kopii.')}};r.readAsText(file)};
+ input.click();
+}
+function showMonthlyReport(){
+ const now=new Date(),y=now.getFullYear(),m=now.getMonth(),name=now.toLocaleDateString('pl-PL',{month:'long',year:'numeric'});
+ const rows=data.students.map(s=>{const ev=data.events.filter(e=>e.studentId===s.id&&new Date(e.date+'T12:00:00').getFullYear()===y&&new Date(e.date+'T12:00:00').getMonth()===m&&e.status!=='cancelled');const unpaid=ev.filter(e=>e.paid!=='paid').reduce((a,e)=>a+Number(e.price||0),0),paid=ev.filter(e=>e.paid==='paid').reduce((a,e)=>a+Number(e.price||0),0);return {s,ev,paid,unpaid}}).filter(x=>x.ev.length);
+ const total=rows.reduce((a,x)=>a+x.paid+x.unpaid,0),to=rows.reduce((a,x)=>a+x.unpaid,0);
+ document.getElementById('reportBody').innerHTML=`<h3 style="margin-top:0">Rozliczenie — ${esc(name)}</h3><p class="details">Łączna wartość lekcji: <b>${total} zł</b> · opłacone: <b>${total-to} zł</b> · do zapłaty: <b>${to} zł</b></p>${rows.map(x=>`<div class="lesson-row"><span><b>${esc(x.s.name)}</b><br><span class="details">${x.ev.length} lekcji</span></span><span><span class="badge paid">${x.paid} zł</span> <span class="badge unpaid">${x.unpaid} zł</span></span></div>`).join('')||'<div class="empty-state">Brak lekcji w tym miesiącu.</div>'}`;
+ document.getElementById('reportOverlay').classList.add('open')
+}
+function printReport(){
+ const body=document.getElementById('reportBody')?.innerHTML||'';const w=window.open('','_blank');if(!w)return;w.document.write('<html><head><title>Rozliczenie lekcji</title><style>body{font-family:Arial;padding:30px;color:#222}h3{margin-top:0}.quick-pay{border:0;background:#e9f8ef;color:#17834d;border-radius:9px;padding:6px 9px;font-weight:700;font-size:11px}.lesson-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #ddd}.badge{padding:5px 9px;border-radius:12px;background:#eee}.paid{background:#e8f8ef}.unpaid{background:#fff0ee}.details{color:#777;font-size:12px}</style></head><body>'+body+'</body></html>');w.document.close();w.print()
+}
+function renderCalendar(){document.getElementById('weekTitle').textContent=weekLabel(current);renderWeek()}
+function renderWeek(){
+ const wrap=document.getElementById('calendarContainer'),start=mondayOf(current),days=[];
+ for(let i=0;i<7;i++){let d=new Date(start);d.setDate(d.getDate()+i);days.push(d)}
+ let h='<div class="week-calendar"><div class="head"></div>'+days.map(d=>`<div class="head ${d.toISOString().slice(0,10)===todayStr()?'today-head':''}">${d.toLocaleDateString('pl-PL',{weekday:'short'})}<br><b>${d.getDate()}</b></div>`).join('');
+ for(let hour=7;hour<=21;hour++){
+   h+=`<div class="time-cell">${String(hour).padStart(2,'0')}:00</div>`;
+   for(let i=0;i<7;i++){
+     const iso=days[i].toISOString().slice(0,10);
+     h+=`<div class="day-cell" data-date="${iso}" data-hour="${hour}" onclick="slotClick('${iso}',${hour})">`;
+     data.events.filter(e=>e.date===iso && e.time && Number(e.time.slice(0,2))===hour).forEach(e=>{
+       const s=getStudent(e.studentId);if(!s)return;
+       const mins=Number((e.time||'00:00').slice(3))||0, top=Math.round(mins/60*64), ht=Math.max(38,Math.round((e.duration||60)/60*64)-3);
+       h+=`<div class="event ${e.status==='cancelled'?'cancelled':''}" style="top:${top}px;height:${ht}px;background:${COLORS[e.subject]||COLORS.Inne}" onclick="event.stopPropagation();openEventModal('${e.id}')"><strong>${esc(s.name)}</strong><div class="sub">${esc(e.time)} · ${esc(e.subject)} ${e.paid==='paid'?'✓':''}</div></div>`;
+     });
+     h+='</div>';
+   }
+ }
+ h+='</div>';wrap.innerHTML=h;
+}
+function slotClick(date,hour){openEventModal(null,date,`${String(hour).padStart(2,'0')}:00`)}
+function openEventModal(id=null,date=null,time=null){
+ editEventId=id;const e=id?data.events.find(x=>x.id===id):null;
+ document.getElementById('eventModalTitle').textContent=e?'Edytuj lekcję':'Nowa lekcja';
+ const sel=document.getElementById('eStudent');sel.innerHTML=data.students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+ if(!data.students.length)sel.innerHTML='<option value="">Najpierw dodaj ucznia</option>';
+ document.getElementById('eDate').value=e?.date||date||todayStr();document.getElementById('eTime').value=e?.time||time||'16:00';
+ document.getElementById('eDuration').value=e?.duration||60;document.getElementById('eSubject').value=e?.subject||'Matematyka';
+ document.getElementById('eRepeat').value=e?.repeat||'none';document.getElementById('ePaid').value=e?.paid||'unpaid';document.getElementById('eStatus').value=e?.status||'scheduled';
+ document.getElementById('ePrice').value=e?.price??(e?.studentId?getStudent(e.studentId)?.price||100:100);document.getElementById('eNote').value=e?.note||'';
+ if(e)sel.value=e.studentId;document.getElementById('eventDelete').style.display=e?'block':'none';document.getElementById('eventQuickPaid').style.display=(e&&e.paid!=='paid'&&e.status!=='cancelled')?'block':'none';document.getElementById('eventOverlay').classList.add('open');
+}
+function saveEvent(){
+ const studentId=document.getElementById('eStudent').value;if(!studentId){alert('Dodaj najpierw ucznia.');return}
+ const base={id:editEventId||uid(),studentId,subject:document.getElementById('eSubject').value,date:document.getElementById('eDate').value,time:document.getElementById('eTime').value,duration:Number(document.getElementById('eDuration').value||60),repeat:document.getElementById('eRepeat').value,paid:document.getElementById('ePaid').value,status:document.getElementById('eStatus').value,price:Number(document.getElementById('ePrice').value||0),note:document.getElementById('eNote').value};
+ if(editEventId){let i=data.events.findIndex(e=>e.id===editEventId);data.events[i]=base}else{data.events.push(base);addRecurringEvents(base)}
+ saveData();closeModal('eventOverlay');renderCalendar();renderStudents()
+}
+function addRecurringEvents(base){
+ if(base.repeat==='none')return;let start=new Date(base.date+'T12:00:00');
+ for(let i=1;i<=52;i++){let d=new Date(start);if(base.repeat==='weekly')d.setDate(d.getDate()+7*i);if(base.repeat==='biweekly')d.setDate(d.getDate()+14*i);if(base.repeat==='monthly')d.setMonth(d.getMonth()+i);data.events.push({...base,id:uid(),date:d.toISOString().slice(0,10),parentId:base.id,repeat:'none'})}
+}
+function deleteEvent(){if(confirm('Usunąć tę lekcję?')){data.events=data.events.filter(e=>e.id!==editEventId);saveData();closeModal('eventOverlay');renderCalendar();renderStudents()}}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function openStudentModal(id=null){
+ editStudentId=id;let s=id?getStudent(id):null;document.getElementById('studentModalTitle').textContent=s?'Karta ucznia':'Nowy uczeń';
+ document.getElementById('sName').value=s?.name||'';document.getElementById('sPhone').value=s?.phone||'';document.getElementById('sEmail').value=s?.email||'';document.getElementById('sClass').value=s?.className||'';document.getElementById('sPrice').value=s?.price??100;document.getElementById('sNote').value=s?.note||'';
+ const evs=s?data.events.filter(e=>e.studentId===id):[],un=evs.filter(e=>e.paid!=='paid'&&e.status!=='cancelled'),pa=evs.filter(e=>e.paid==='paid'&&e.status!=='cancelled');
+ document.getElementById('studentSummary').innerHTML=s?`<div class="summary-box"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><b>${esc(s.name)}</b><div class="details">${esc(s.note||'Brak notatki')}</div></div><div><span class="badge paid">Opłacone: ${pa.length}</span> <span class="badge unpaid">Nieopłacone: ${un.length}</span></div></div><div style="margin-top:10px">Do zapłaty: <span class="money">${un.reduce((a,e)=>a+Number(e.price||0),0)} zł</span></div><div style="margin-top:10px;max-height:180px;overflow:auto">${evs.slice().sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time)).slice(0,10).map(e=>`<div class="lesson-row"><span>${fmtDate(e.date)} ${e.time||''} · ${esc(e.subject)}<br><span class="details">${Number(e.price||0)} zł</span></span><span style="display:flex;align-items:center;gap:6px"><span class="badge ${e.status==='cancelled'?'cancel':e.paid==='paid'?'paid':'unpaid'}">${e.status==='cancelled'?'Odwołana':e.paid==='paid'?'Opłacona':'Nieopłacona'}</span>${e.status!=='cancelled'&&e.paid!=='paid'?`<button class="quick-pay" onclick="event.stopPropagation();quickPay('${e.id}')">✓ Zapłacone</button>`:''}</span></div>`).join('')}</div></div>`:'';
+ document.getElementById('studentDelete').style.display=s?'block':'none';document.getElementById('studentOverlay').classList.add('open')
+}
+function saveStudent(){
+ const name=document.getElementById('sName').value.trim();if(!name){alert('Wpisz imię i nazwisko.');return}
+ const s={id:editStudentId||uid(),name,phone:document.getElementById('sPhone').value.trim(),email:document.getElementById('sEmail').value.trim(),className:document.getElementById('sClass').value.trim(),price:Number(document.getElementById('sPrice').value||0),note:document.getElementById('sNote').value.trim()};
+ if(editStudentId)data.students[data.students.findIndex(x=>x.id===editStudentId)]=s;else data.students.push(s);saveData();closeModal('studentOverlay');renderStudents();renderCalendar()
+}
+function deleteStudent(){if(confirm('Usunąć ucznia oraz wszystkie jego lekcje?')){data.students=data.students.filter(s=>s.id!==editStudentId);data.events=data.events.filter(e=>e.studentId!==editStudentId);saveData();closeModal('studentOverlay');renderStudents();renderCalendar()}}
+function renderStudents(){
+ const q=(document.getElementById('studentSearch')?.value||'').toLowerCase(),list=document.getElementById('studentList'),stats=document.getElementById('stats'),shown=data.students.filter(s=>s.name.toLowerCase().includes(q));
+ const upcoming=data.events.filter(e=>e.date>=todayStr()&&e.status!=='cancelled'),unpaid=data.events.filter(e=>e.paid!=='paid'&&e.status!=='cancelled');
+ stats.innerHTML=`<div class="stat"><div class="num">${data.students.length}</div><div class="lbl">uczniów</div></div><div class="stat"><div class="num">${upcoming.length}</div><div class="lbl">nadchodzących lekcji</div></div><div class="stat"><div class="num">${unpaid.length}</div><div class="lbl">nieopłaconych lekcji</div></div><div class="stat"><div class="num">${unpaid.reduce((a,e)=>a+Number(e.price||0),0)} zł</div><div class="lbl">do zapłaty</div></div>`;
+ list.innerHTML=shown.length?shown.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>{let evs=data.events.filter(e=>e.studentId===s.id&&e.status!=='cancelled'),un=evs.filter(e=>e.paid!=='paid').length;return `<div class="student-card" onclick="openStudentModal('${s.id}')"><div class="student-main"><div class="avatar">${esc(s.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase())}</div><div><b>${esc(s.name)}</b><div class="details">${esc(s.className||'')} ${s.phone?'· '+esc(s.phone):''}</div></div></div><div>${un?`<span class="badge unpaid">${un} nieopł.</span>`:'<span class="badge paid">Opłacone</span>'}</div></div>`}).join(''):'<div class="empty-state">Brak uczniów pasujących do wyszukiwania.</div>'
+}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kalendarz-uczniow-kopia.json';a.click();URL.revokeObjectURL(a.href)}
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('eventOverlay');closeModal('studentOverlay')}});
+
+// First launch sample
+if(!data.students.length){
+ const s1={id:uid(),name:'Anna Kowalska',phone:'',email:'',className:'klasa 8',price:120,note:'Przygotowanie do egzaminu ósmoklasisty'};
+ const s2={id:uid(),name:'Jan Nowak',phone:'',email:'',className:'matura rozszerzona',price:150,note:'Funkcje i trygonometria'};
+ let d=new Date(),iso=d.toISOString().slice(0,10);data.students=[s1,s2];data.events=[
+ {id:uid(),studentId:s1.id,subject:'Matematyka',date:iso,time:'16:00',duration:60,repeat:'none',paid:'paid',status:'scheduled',price:120,note:''},
+ {id:uid(),studentId:s2.id,subject:'Matematyka',date:iso,time:'18:00',duration:90,repeat:'none',paid:'unpaid',status:'scheduled',price:150,note:'Powtórka'}
+ ];saveData()
+}
+renderCalendar();
+if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
