@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#6d5dfc">
-<title>Mój Kalendarz Lekcji — v4</title>
+<title>Mój Kalendarz Lekcji — v5</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,7 +24,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
 .page{display:none}.page.active{display:block}.student-list{display:grid;gap:10px}.student-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:15px;display:flex;justify-content:space-between;align-items:center;gap:10px}.student-main{display:flex;align-items:center;gap:12px}.avatar{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#eeecff;color:#5d4fe8;font-weight:750}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:700}.paid{background:#e8f8ef;color:#17834d}.unpaid{background:#fff0ee;color:#bb4a37}.cancel{background:#f0f0f4;color:#777}.details{color:var(--muted);font-size:12px;margin-top:2px}.search{background:#fff;border:1px solid var(--border);border-radius:11px;padding:10px 12px;width:min(280px,50vw)}
 .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:15px}.stat .num{font-size:24px;font-weight:760}.stat .lbl{font-size:12px;color:var(--muted)}
 .overlay{display:none;position:fixed;inset:0;background:rgba(20,22,35,.45);z-index:10;padding:18px;overflow:auto}.overlay.open{display:flex;align-items:center;justify-content:center}.modal{width:min(780px,100%);background:#fff;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden}.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font-size:19px}.close{border:0;background:#f3f3f8;border-radius:10px;width:36px;height:36px}.modal-body{padding:20px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);font-weight:600}.field input,.field select,.field textarea{border:1px solid var(--border);border-radius:11px;padding:11px 12px;outline:0;background:#fbfbfe}.field input:focus,.field select:focus,.field textarea:focus{border-color:#b6afff;box-shadow:0 0 0 3px #eeeaff}.modal-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:8px}.danger{background:#fff1f1;color:#b33a3a;border:1px solid #ffd6d6;border-radius:10px;padding:10px 13px}
-.summary-box{background:#f8f8fc;border-radius:14px;padding:14px;margin-top:14px}.money{font-size:18px;font-weight:750}.quick-pay{border:0;background:#e9f8ef;color:#17834d;border-radius:9px;padding:6px 9px;font-weight:700;font-size:11px}.lesson-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}.lesson-row:last-child{border-bottom:0}
+.repeat-summary{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fbfbfe;display:flex;justify-content:space-between;align-items:center;gap:10px}.repeat-btn{border:1px solid var(--border);background:#fff;border-radius:11px;padding:11px 12px;text-align:left;width:100%;display:flex;justify-content:space-between;align-items:center}.repeat-modal{width:min(560px,100%)}.repeat-option{padding:13px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;margin-bottom:9px;text-align:left;width:100%}.repeat-option.active{border-color:#6d5dfc;background:#f5f3ff}.repeat-option small{display:block;color:var(--muted);margin-top:3px}.summary-box{background:#f8f8fc;border-radius:14px;padding:14px;margin-top:14px}.money{font-size:18px;font-weight:750}.quick-pay{border:0;background:#e9f8ef;color:#17834d;border-radius:9px;padding:6px 9px;font-weight:700;font-size:11px}.lesson-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}.lesson-row:last-child{border-bottom:0}
 .mobile-nav{display:none}
 @media(max-width:850px){.sidebar{display:none}.mobile-nav{display:flex;position:fixed;bottom:10px;left:10px;right:10px;background:#fff;border:1px solid var(--border);border-radius:17px;padding:7px;z-index:8;box-shadow:var(--shadow)}.mobile-nav button{flex:1;border:0;background:none;padding:9px;border-radius:11px;color:var(--muted);font-size:12px}.mobile-nav button.active{background:#f0eeff;color:var(--primary);font-weight:700}main{padding:14px 14px 85px}.topbar{align-items:flex-start}.actions .secondary{display:none}.week-calendar{grid-template-columns:45px repeat(7,1fr)}.week-calendar-wrap{overflow-x:auto}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.stat-grid{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:auto}.search{width:48vw}}
 </style>
@@ -38,7 +38,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
       <button id="navStudents" onclick="showPage('students')">👩‍🎓 Uczniowie</button>
     </nav>
     <div class="side-section">
-      <div class="side-title">Kolory spotkań · v4</div>
+      <div class="side-title">Kolory spotkań · v5</div>
       <div class="legend-item"><span class="dot" style="background:#e53935"></span>MBank Edyta</div>
       <div class="legend-item"><span class="dot" style="background:#f2c94c"></span>MBank Marcin</div>
       <div class="legend-item"><span class="dot" style="background:#8e44ad"></span>Millenium Edyta</div>
@@ -92,7 +92,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
         <div class="field"><label>Data</label><input id="eDate" type="date"></div>
         <div class="field"><label>Godzina</label><input id="eTime" type="time"></div>
         <div class="field"><label>Czas trwania (min)</label><input id="eDuration" type="number" min="15" step="15" value="60"></div>
-        <div class="field"><label>Powtarzanie</label><select id="eRepeat"><option value="none">Jednorazowo</option><option value="weekly">Co tydzień</option><option value="biweekly">Co 2 tygodnie</option><option value="monthly">Co miesiąc</option></select></div>
+        <div class="field"><label>Powtarzanie</label><button type="button" class="repeat-btn" onclick="openRepeatModal()"><span id="repeatSummary">Jednorazowo</span><span>›</span></button><input id="eRepeat" type="hidden" value="none"><input id="eRepeatUntil" type="hidden" value=""></div>
         <div class="field"><label>Płatność</label><select id="ePaid"><option value="unpaid">Nieopłacone</option><option value="paid">Opłacone</option></select></div>
         <div class="field"><label>Status lekcji</label><select id="eStatus"><option value="scheduled">Zaplanowana</option><option value="cancelled">Odwołana</option></select></div>
         <div class="field"><label>Cena za lekcję (zł)</label><input id="ePrice" type="number" min="0" step="1" value="100"></div>
@@ -121,6 +121,24 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
   </div>
 </div>
 
+<div id="repeatOverlay" class="overlay">
+  <div class="modal repeat-modal">
+    <div class="modal-head"><h3>Ustaw powtarzanie</h3><button class="close" onclick="closeModal('repeatOverlay')">✕</button></div>
+    <div class="modal-body">
+      <div class="details" style="margin-bottom:12px">Wybierz, jak często ma odbywać się ta lekcja.</div>
+      <button type="button" class="repeat-option" data-repeat="none" onclick="chooseRepeat('none')"><b>Jednorazowo</b><small>Lekcja odbędzie się tylko raz.</small></button>
+      <button type="button" class="repeat-option" data-repeat="weekly" onclick="chooseRepeat('weekly')"><b>Co tydzień</b><small>Powtarzaj co 1 tydzień.</small></button>
+      <button type="button" class="repeat-option" data-repeat="biweekly" onclick="chooseRepeat('biweekly')"><b>Co 2 tygodnie</b><small>Powtarzaj co 2 tygodnie.</small></button>
+      <button type="button" class="repeat-option" data-repeat="monthly" onclick="chooseRepeat('monthly')"><b>Co miesiąc</b><small>Powtarzaj w tym samym dniu miesiąca.</small></button>
+      <div id="repeatUntilBox" class="field" style="margin-top:14px;display:none">
+        <label>Zakończ powtarzanie</label>
+        <input id="repeatUntilPicker" type="date">
+        <span class="details">Lekcje będą zaplanowane do tej daty włącznie.</span>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="secondary" onclick="closeModal('repeatOverlay')">Anuluj</button><button class="primary" onclick="saveRepeatSettings()">Zapisz</button></div>
+  </div>
+</div>
 <div id="paymentOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>💰 Płatności</h3><button class="close" onclick="closeModal('paymentOverlay')">✕</button></div><div class="modal-body" id="paymentBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('paymentOverlay')">Zamknij</button></div></div></div><div id="reportOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>Rozliczenie miesiąca</h3><button class="close" onclick="closeModal('reportOverlay')">✕</button></div><div class="modal-body" id="reportBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('reportOverlay')">Zamknij</button><button class="primary" onclick="printReport()">🖨️ Drukuj / PDF</button></div></div></div><script>
 const COLORS={'MBank Edyta':'#e53935','MBank Marcin':'#f2c94c','Millenium Edyta':'#8e44ad','Millenium Marcin':'#27ae60',Inne:'#d95776'};
 const KEY='moj_kalendarz_uczniow_v2';
@@ -189,6 +207,33 @@ function renderWeek(){
  h+='</div>';wrap.innerHTML=h;
 }
 function slotClick(date,hour){openEventModal(null,date,`${String(hour).padStart(2,'0')}:00`)}
+let pendingRepeat='none';
+function repeatLabel(v){return ({none:'Jednorazowo',weekly:'Co tydzień',biweekly:'Co 2 tygodnie',monthly:'Co miesiąc'})[v]||'Jednorazowo'}
+function openRepeatModal(){
+ pendingRepeat=document.getElementById('eRepeat').value||'none';
+ document.getElementById('repeatUntilPicker').value=document.getElementById('eRepeatUntil').value||document.getElementById('eDate').value||todayStr();
+ document.querySelectorAll('.repeat-option').forEach(b=>b.classList.toggle('active',b.dataset.repeat===pendingRepeat));
+ document.getElementById('repeatUntilBox').style.display=pendingRepeat==='none'?'none':'flex';
+ document.getElementById('repeatOverlay').classList.add('open');
+}
+function chooseRepeat(v){
+ pendingRepeat=v;
+ document.querySelectorAll('.repeat-option').forEach(b=>b.classList.toggle('active',b.dataset.repeat===v));
+ document.getElementById('repeatUntilBox').style.display=v==='none'?'none':'flex';
+ if(v!=='none' && !document.getElementById('repeatUntilPicker').value) document.getElementById('repeatUntilPicker').value=document.getElementById('eDate').value||todayStr();
+}
+function saveRepeatSettings(){
+ const date=document.getElementById('eDate').value||todayStr(),until=document.getElementById('repeatUntilPicker').value||'';
+ if(pendingRepeat!=='none' && (!until || until<date)){alert('Wybierz datę zakończenia nie wcześniejszą niż data pierwszej lekcji.');return}
+ document.getElementById('eRepeat').value=pendingRepeat;
+ document.getElementById('eRepeatUntil').value=pendingRepeat==='none'?'':until;
+ document.getElementById('repeatSummary').textContent=pendingRepeat==='none'?'Jednorazowo':repeatLabel(pendingRepeat)+' · do '+fmtDate(until);
+ closeModal('repeatOverlay');
+}
+function syncRepeatSummary(){
+ const r=document.getElementById('eRepeat').value||'none',u=document.getElementById('eRepeatUntil').value||'';
+ document.getElementById('repeatSummary').textContent=r==='none'?'Jednorazowo':repeatLabel(r)+(u?' · do '+fmtDate(u):'');
+}
 function openEventModal(id=null,date=null,time=null){
  editEventId=id;const e=id?data.events.find(x=>x.id===id):null;
  document.getElementById('eventModalTitle').textContent=e?'Edytuj lekcję':'Nowa lekcja';
@@ -196,19 +241,53 @@ function openEventModal(id=null,date=null,time=null){
  if(!data.students.length)sel.innerHTML='<option value="">Najpierw dodaj ucznia</option>';
  document.getElementById('eDate').value=e?.date||date||todayStr();document.getElementById('eTime').value=e?.time||time||'16:00';
  document.getElementById('eDuration').value=e?.duration||60;document.getElementById('eSubject').value=e?.subject||'MBank Edyta';
- document.getElementById('eRepeat').value=e?.repeat||'none';document.getElementById('ePaid').value=e?.paid||'unpaid';document.getElementById('eStatus').value=e?.status||'scheduled';
+ document.getElementById('eRepeat').value=e?.repeat||'none';document.getElementById('eRepeatUntil').value=e?.repeatUntil||'';
+ syncRepeatSummary();
+ document.getElementById('ePaid').value=e?.paid||'unpaid';document.getElementById('eStatus').value=e?.status||'scheduled';
  document.getElementById('ePrice').value=e?.price??(e?.studentId?getStudent(e.studentId)?.price||100:100);document.getElementById('eNote').value=e?.note||'';
  if(e)sel.value=e.studentId;document.getElementById('eventDelete').style.display=e?'block':'none';document.getElementById('eventQuickPaid').style.display=(e&&e.paid!=='paid'&&e.status!=='cancelled')?'block':'none';document.getElementById('eventOverlay').classList.add('open');
 }
+function dateOnly(s){return new Date(s+'T12:00:00')}
+function dateDiffDays(a,b){return Math.round((dateOnly(b)-dateOnly(a))/86400000)}
+function shiftDateStr(s,days){let d=dateOnly(s);d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+function seriesRootId(e){return e?.parentId||e?.id}
+function seriesEvents(e){const root=seriesRootId(e);return data.events.filter(x=>seriesRootId(x)===root)}
+function moveSeries(e,oldDate,newDate,newTime){
+ const delta=dateDiffDays(oldDate,newDate),group=seriesEvents(e);
+ group.forEach(x=>{x.date=shiftDateStr(x.date,delta);x.time=newTime;if(x.repeatUntil)x.repeatUntil=shiftDateStr(x.repeatUntil,delta)});
+}
+function askMoveScope(e,oldDate,oldTime,newDate,newTime){
+ const group=seriesEvents(e),hasSeries=group.length>1||e.repeat!=='none'||!!e.parentId;
+ if(!hasSeries||(oldDate===newDate&&oldTime===newTime))return 'single';
+ return confirm('Ta lekcja należy do serii.\n\nOK — PRZESUŃ CAŁĄ SERIĘ\nAnuluj — tylko bieżącą lekcję')?'series':'single';
+}
 function saveEvent(){
  const studentId=document.getElementById('eStudent').value;if(!studentId){alert('Dodaj najpierw ucznia.');return}
- const base={id:editEventId||uid(),studentId,subject:document.getElementById('eSubject').value,date:document.getElementById('eDate').value,time:document.getElementById('eTime').value,duration:Number(document.getElementById('eDuration').value||60),repeat:document.getElementById('eRepeat').value,paid:document.getElementById('ePaid').value,status:document.getElementById('eStatus').value,price:Number(document.getElementById('ePrice').value||0),note:document.getElementById('eNote').value};
- if(editEventId){let i=data.events.findIndex(e=>e.id===editEventId);data.events[i]=base}else{data.events.push(base);addRecurringEvents(base)}
- saveData();closeModal('eventOverlay');renderCalendar();renderStudents()
+ const repeat=document.getElementById('eRepeat').value,repeatUntil=document.getElementById('eRepeatUntil').value||'',date=document.getElementById('eDate').value;
+ if(repeat!=='none'&&(!repeatUntil||repeatUntil<date)){alert('Wybierz datę zakończenia cyklu nie wcześniejszą niż data pierwszej lekcji.');return}
+ const old=editEventId?data.events.find(x=>x.id===editEventId):null;
+ const base={id:editEventId||uid(),studentId,subject:document.getElementById('eSubject').value,date,time:document.getElementById('eTime').value,duration:Number(document.getElementById('eDuration').value||60),repeat,repeatUntil,paid:document.getElementById('ePaid').value,status:document.getElementById('eStatus').value,price:Number(document.getElementById('ePrice').value||0),note:document.getElementById('eNote').value};
+ if(editEventId){
+   const scope=askMoveScope(old,old.date,old.time,date,base.time);
+   const i=data.events.findIndex(e=>e.id===editEventId);
+   data.events[i]={...old,...base};
+   if(scope==='series')moveSeries(data.events[i],old.date,date,base.time);
+ }else{data.events.push(base);addRecurringEvents(base)}
+ saveData();closeModal('eventOverlay');closeModal('repeatOverlay');renderCalendar();renderStudents()
 }
 function addRecurringEvents(base){
- if(base.repeat==='none')return;let start=new Date(base.date+'T12:00:00');
- for(let i=1;i<=52;i++){let d=new Date(start);if(base.repeat==='weekly')d.setDate(d.getDate()+7*i);if(base.repeat==='biweekly')d.setDate(d.getDate()+14*i);if(base.repeat==='monthly')d.setMonth(d.getMonth()+i);data.events.push({...base,id:uid(),date:d.toISOString().slice(0,10),parentId:base.id,repeat:'none'})}
+ if(base.repeat==='none')return;
+ const start=dateOnly(base.date),until=dateOnly(base.repeatUntil||base.date);
+ let i=1,safety=0;
+ while(safety++<1000){
+   let d=new Date(start);
+   if(base.repeat==='weekly')d.setDate(d.getDate()+7*i);
+   if(base.repeat==='biweekly')d.setDate(d.getDate()+14*i);
+   if(base.repeat==='monthly')d.setMonth(d.getMonth()+i);
+   if(d>until)break;
+   data.events.push({...base,id:uid(),date:d.toISOString().slice(0,10),parentId:base.id,repeat:'none',repeatUntil:''});
+   i++;
+ }
 }
 function deleteEvent(){if(confirm('Usunąć tę lekcję?')){data.events=data.events.filter(e=>e.id!==editEventId);saveData();closeModal('eventOverlay');renderCalendar();renderStudents()}}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
@@ -232,7 +311,7 @@ function renderStudents(){
  list.innerHTML=shown.length?shown.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>{let evs=data.events.filter(e=>e.studentId===s.id&&e.status!=='cancelled'),un=evs.filter(e=>e.paid!=='paid').length;return `<div class="student-card" onclick="openStudentModal('${s.id}')"><div class="student-main"><div class="avatar">${esc(s.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase())}</div><div><b>${esc(s.name)}</b><div class="details">${esc(s.className||'')} ${s.phone?'· '+esc(s.phone):''}</div></div></div><div>${un?`<span class="badge unpaid">${un} nieopł.</span>`:'<span class="badge paid">Opłacone</span>'}</div></div>`}).join(''):'<div class="empty-state">Brak uczniów pasujących do wyszukiwania.</div>'
 }
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kalendarz-uczniow-kopia.json';a.click();URL.revokeObjectURL(a.href)}
-window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('eventOverlay');closeModal('studentOverlay')}});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('eventOverlay');closeModal('studentOverlay');closeModal('repeatOverlay')}});
 
 // First launch sample
 if(!data.students.length){
