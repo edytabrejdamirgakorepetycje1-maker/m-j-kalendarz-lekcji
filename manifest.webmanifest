@@ -1,7 +1,6 @@
 {
   "name": "Mój Kalendarz Lekcji",
   "short_name": "Kalendarz Lekcji",
-  "description": "Kalendarz, uczniowie, lekcje cykliczne i rozliczenia płatności.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f5f6fb",

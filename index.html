@@ -39,9 +39,10 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
     </nav>
     <div class="side-section">
       <div class="side-title">Kolory spotkań</div>
-      <div class="legend-item"><span class="dot" style="background:#6d5dfc"></span>Matematyka</div>
-      <div class="legend-item"><span class="dot" style="background:#1fa67a"></span>Fizyka</div>
-      <div class="legend-item"><span class="dot" style="background:#e38a23"></span>Chemia</div>
+      <div class="legend-item"><span class="dot" style="background:#e53935"></span>MBank Edyta</div>
+      <div class="legend-item"><span class="dot" style="background:#f2c94c"></span>MBank Marcin</div>
+      <div class="legend-item"><span class="dot" style="background:#8e44ad"></span>Millenium Edyta</div>
+      <div class="legend-item"><span class="dot" style="background:#27ae60"></span>Millenium Marcin</div>
       <div class="legend-item"><span class="dot" style="background:#d95776"></span>Inne</div>
     </div>
   </aside>
@@ -81,7 +82,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
     <div class="modal-body">
       <div class="form-grid">
         <div class="field"><label>Uczeń</label><select id="eStudent"></select></div>
-        <div class="field"><label>Przedmiot / kolor</label><select id="eSubject"><option value="Matematyka">Matematyka</option><option value="Fizyka">Fizyka</option><option value="Chemia">Chemia</option><option value="Inne">Inne</option></select></div>
+        <div class="field"><label>Nazwa spotkania / kolor</label><select id="eSubject"><option value="MBank Edyta">MBank Edyta</option><option value="MBank Marcin">MBank Marcin</option><option value="Millenium Edyta">Millenium Edyta</option><option value="Millenium Marcin">Millenium Marcin</option></select></div>
         <div class="field"><label>Data</label><input id="eDate" type="date"></div>
         <div class="field"><label>Godzina</label><input id="eTime" type="time"></div>
         <div class="field"><label>Czas trwania (min)</label><input id="eDuration" type="number" min="15" step="15" value="60"></div>
@@ -115,7 +116,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
 </div>
 
 <div id="paymentOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>💰 Płatności</h3><button class="close" onclick="closeModal('paymentOverlay')">✕</button></div><div class="modal-body" id="paymentBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('paymentOverlay')">Zamknij</button></div></div></div><div id="reportOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>Rozliczenie miesiąca</h3><button class="close" onclick="closeModal('reportOverlay')">✕</button></div><div class="modal-body" id="reportBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('reportOverlay')">Zamknij</button><button class="primary" onclick="printReport()">🖨️ Drukuj / PDF</button></div></div></div><script>
-const COLORS={Matematyka:'#6d5dfc',Fizyka:'#1fa67a',Chemia:'#e38a23',Inne:'#d95776'};
+const COLORS={'MBank Edyta':'#e53935','MBank Marcin':'#f2c94c','Millenium Edyta':'#8e44ad','Millenium Marcin':'#27ae60',Matematyka:'#6d5dfc',Fizyka:'#1fa67a',Chemia:'#e38a23',Inne:'#d95776'};
 const KEY='moj_kalendarz_uczniow_v2';
 let data={students:[],events:[]};
 try { data=JSON.parse(localStorage.getItem(KEY)||'null')||data; } catch(e) { console.warn('Local storage unavailable; using in-memory data.'); }
@@ -188,7 +189,7 @@ function openEventModal(id=null,date=null,time=null){
  const sel=document.getElementById('eStudent');sel.innerHTML=data.students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
  if(!data.students.length)sel.innerHTML='<option value="">Najpierw dodaj ucznia</option>';
  document.getElementById('eDate').value=e?.date||date||todayStr();document.getElementById('eTime').value=e?.time||time||'16:00';
- document.getElementById('eDuration').value=e?.duration||60;document.getElementById('eSubject').value=e?.subject||'Matematyka';
+ document.getElementById('eDuration').value=e?.duration||60;document.getElementById('eSubject').value=e?.subject||'MBank Edyta';
  document.getElementById('eRepeat').value=e?.repeat||'none';document.getElementById('ePaid').value=e?.paid||'unpaid';document.getElementById('eStatus').value=e?.status||'scheduled';
  document.getElementById('ePrice').value=e?.price??(e?.studentId?getStudent(e.studentId)?.price||100:100);document.getElementById('eNote').value=e?.note||'';
  if(e)sel.value=e.studentId;document.getElementById('eventDelete').style.display=e?'block':'none';document.getElementById('eventQuickPaid').style.display=(e&&e.paid!=='paid'&&e.status!=='cancelled')?'block':'none';document.getElementById('eventOverlay').classList.add('open');
@@ -232,8 +233,8 @@ if(!data.students.length){
  const s1={id:uid(),name:'Anna Kowalska',phone:'',email:'',className:'klasa 8',price:120,note:'Przygotowanie do egzaminu ósmoklasisty'};
  const s2={id:uid(),name:'Jan Nowak',phone:'',email:'',className:'matura rozszerzona',price:150,note:'Funkcje i trygonometria'};
  let d=new Date(),iso=d.toISOString().slice(0,10);data.students=[s1,s2];data.events=[
- {id:uid(),studentId:s1.id,subject:'Matematyka',date:iso,time:'16:00',duration:60,repeat:'none',paid:'paid',status:'scheduled',price:120,note:''},
- {id:uid(),studentId:s2.id,subject:'Matematyka',date:iso,time:'18:00',duration:90,repeat:'none',paid:'unpaid',status:'scheduled',price:150,note:'Powtórka'}
+ {id:uid(),studentId:s1.id,subject:'MBank Edyta',date:iso,time:'16:00',duration:60,repeat:'none',paid:'paid',status:'scheduled',price:120,note:''},
+ {id:uid(),studentId:s2.id,subject:'MBank Marcin',date:iso,time:'18:00',duration:90,repeat:'none',paid:'unpaid',status:'scheduled',price:150,note:'Powtórka'}
  ];saveData()
 }
 renderCalendar();
