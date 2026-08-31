@@ -1,0 +1,11 @@
+AKTUALIZACJA v14 — Mój Kalendarz Lekcji
+
+Wprowadzone zmiany:
+1. Biały pasek z menu i kolorami spotkań został przeniesiony NAD kalendarz.
+2. Pasek pozostaje widoczny podczas przewijania.
+3. „Prywatne” ma wyraźny różowy kolor (#ff1493) także na lekcjach w kalendarzu.
+4. Bieżący dzień jest mocno wyróżniony: żółte tło, obramowanie i podkreślona data.
+5. Na małym ekranie pasek pozostaje na górze i można przewijać jego zawartość poziomo.
+6. Zachowana została wcześniejsza synchronizacja GitHub oraz pozostałe funkcje aplikacji.
+
+Do GitHub Pages wgraj zaktualizowany index.html oraz dotychczasowy sync.js.
