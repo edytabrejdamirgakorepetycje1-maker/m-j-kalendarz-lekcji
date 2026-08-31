@@ -5,132 +5,56 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#6d5dfc">
 <title>Mój Kalendarz Lekcji — v15</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Mój Kalendarz">
 <style>
 :root{--bg:#cdd2df;--panel:#fff;--text:#171b2b;--muted:#525b70;--border:#aeb7ca;--primary:#5141dc;--shadow:0 12px 34px rgba(32,42,70,.14);--radius:18px}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:flex}
-.sidebar{width:270px;background:#fff;border-right:1px solid var(--border);padding:22px 18px;position:sticky;top:0;height:100vh;overflow:auto}
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#7b6cff,#5143d8);color:#fff;display:grid;place-items:center;font-weight:800}
-.brand h1{font-size:18px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:2px 0 0}.nav button{width:100%;border:0;background:none;padding:12px 14px;border-radius:12px;text-align:left;color:#55586c;margin:3px 0}.nav button.active,.nav button:hover{background:#f1efff;color:var(--primary);font-weight:600}
-.side-section{margin-top:26px}.side-title{font-size:11px;color:#999cad;text-transform:uppercase;letter-spacing:.08em;margin:0 8px 10px}.legend-item{display:flex;align-items:center;gap:8px;padding:8px 7px;color:#4b5367;font-size:13px;cursor:pointer;border-radius:9px}.legend-item:hover{background:#f0eeff;color:var(--primary)}.dot{width:10px;height:10px;border-radius:50%}
-main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.title-row{display:flex;align-items:center;gap:12px}.title-row h2{margin:0;font-size:25px}.today,.secondary{border:1px solid var(--border);background:#fff;border-radius:11px;padding:9px 12px;color:#45485b}.actions{display:flex;gap:8px}.primary{background:var(--primary);color:#fff;border:0;border-radius:12px;padding:11px 15px;font-weight:650}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:block}
+.sidebar{width:100%;background:#fff;border-bottom:1px solid var(--border);padding:12px 18px;position:relative;height:auto;overflow:visible;display:flex;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(32,42,70,.08);z-index:4}
+.brand{display:flex;align-items:center;gap:12px;margin:0;flex:0 0 auto}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#7b6cff,#5143d8);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand h1{font-size:18px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:2px 0 0}.nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}.nav button{width:auto;border:0;background:none;padding:12px 14px;border-radius:12px;text-align:left;color:#55586c;margin:3px 0}.nav button.active,.nav button:hover{background:#f1efff;color:var(--primary);font-weight:600}
+.side-section{margin:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap;flex:1;min-width:0}.side-title{font-size:10px;color:#999cad;text-transform:uppercase;letter-spacing:.08em;margin:0 8px 10px}.legend-item{display:flex;align-items:center;gap:7px;padding:7px 8px;color:#4b5367;font-size:13px;cursor:pointer;border-radius:9px}.legend-item:hover{background:#f0eeff;color:var(--primary)}.dot{width:10px;height:10px;border-radius:50%}
+main{padding:18px 22px 30px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.title-row{display:flex;align-items:center;gap:12px}.title-row h2{margin:0;font-size:25px}.today,.secondary{border:1px solid var(--border);background:#fff;border-radius:11px;padding:9px 12px;color:#45485b}.actions{display:flex;gap:8px}.primary{background:var(--primary);color:#fff;border:0;border-radius:12px;padding:11px 15px;font-weight:650}
 .grid-area{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.calendar-head{display:flex;justify-content:space-between;align-items:center;padding:15px 16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#ffffff,#f8f9fd)}.cal-nav{display:flex;gap:7px;align-items:center}.cal-nav button{width:38px;height:38px;border:1px solid var(--border);background:#fff;border-radius:10px}.view-switch{display:flex;gap:3px;background:#f1f1f7;padding:3px;border-radius:11px}.view-switch button{border:0;background:transparent;padding:7px 12px;border-radius:8px;color:#626578}.view-switch button.active{background:#fff;color:var(--primary);font-weight:700;box-shadow:0 2px 7px #ddd}
-.week-calendar{display:grid;grid-template-columns:72px repeat(7,1fr);min-width:820px;background:#eef0f8}.week-calendar .head{padding:11px 6px;text-align:center;border-right:1px solid var(--border);border-bottom:2px solid #b4bdcf;font-size:14px;color:#4f566a;font-weight:750;background:#f8f9fc}.week-calendar .head.today-head{color:var(--primary);background:#faf9ff}.time-cell{height:64px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-size:15px;color:#394157;text-align:center;padding-top:6px;font-weight:800;background:#e7eaf2}.day-cell{height:64px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;background:linear-gradient(to bottom,rgba(255,255,255,.20) 31px,#cfd5e1 32px,rgba(255,255,255,.20) 33px)}.day-cell:nth-child(8n){border-right:0}.event{position:absolute;left:3px;right:3px;border-radius:10px;padding:6px 7px;color:#fff;font-size:11px;line-height:1.2;z-index:2;overflow:hidden;box-shadow:0 3px 8px rgba(0,0,0,.12);border-left:4px solid rgba(255,255,255,.75)}.event strong{display:block;font-size:12px;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,255,255,.45);text-underline-offset:2px}.event .sub{opacity:.96;margin-top:2px;font-size:10.5px}.event.paid{outline:2px solid rgba(255,255,255,.35)}.event.cancelled{opacity:.48;text-decoration:line-through}.now-line{position:absolute;left:0;right:0;height:2px;background:#f04b5f;z-index:3}
+.week-calendar{display:grid;grid-template-columns:72px repeat(7,1fr);min-width:820px;background:#eef0f8}.week-calendar .head{padding:12px 6px;text-align:center;border-right:1px solid var(--border);border-bottom:2px solid #b4bdcf;font-size:14px;color:#4f566a;font-weight:750;background:#f8f9fc}.week-calendar .head.today-head{color:#5141dc;background:#f8f6ff;border-bottom:4px solid #ff1493!important;box-shadow:inset 0 -1px 0 #ff1493}.week-calendar .head.today-head b{text-decoration:underline;text-decoration-color:#ff1493;text-decoration-thickness:3px;text-underline-offset:4px}.time-cell{height:64px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);font-size:15px;color:#394157;text-align:center;padding-top:6px;font-weight:800;background:#e7eaf2}.day-cell{height:64px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;background:linear-gradient(to bottom,rgba(255,255,255,.20) 31px,#cfd5e1 32px,rgba(255,255,255,.20) 33px)}.day-cell:nth-child(8n){border-right:0}.event{position:absolute;left:3px;right:3px;border-radius:10px;padding:6px 7px;color:#fff;font-size:11px;line-height:1.2;z-index:2;overflow:hidden;box-shadow:0 3px 8px rgba(0,0,0,.12);border-left:4px solid rgba(255,255,255,.75)}.event strong{display:block;font-size:12px;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,255,255,.45);text-underline-offset:2px}.event .sub{opacity:.96;margin-top:2px;font-size:10.5px}.event.paid{outline:2px solid rgba(255,255,255,.35)}.event.cancelled{opacity:.48;text-decoration:line-through}.now-line{position:absolute;left:0;right:0;height:2px;background:#f04b5f;z-index:3}
 .page{display:none}.page.active{display:block}.student-list{display:grid;gap:10px}.student-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:15px;display:flex;justify-content:space-between;align-items:center;gap:10px}.student-main{display:flex;align-items:center;gap:12px}.avatar{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#eeecff;color:#5d4fe8;font-weight:750}.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:700}.paid{background:#e8f8ef;color:#17834d}.unpaid{background:#fff0ee;color:#bb4a37}.cancel{background:#f0f0f4;color:#777}.details{color:var(--muted);font-size:12px;margin-top:2px}.search{background:#fff;border:1px solid var(--border);border-radius:11px;padding:10px 12px;width:min(280px,50vw)}
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--border);border-radius:16px;padding:15px}.stat .num{font-size:24px;font-weight:760}.stat .lbl{font-size:12px;color:var(--muted)}
 .overlay{display:none;position:fixed;inset:0;background:rgba(20,22,35,.45);z-index:10;padding:18px;overflow:auto}.overlay.open{display:flex;align-items:center;justify-content:center}.modal{width:min(780px,100%);background:#fff;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden}.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font-size:19px}.close{border:0;background:#f3f3f8;border-radius:10px;width:36px;height:36px}.modal-body{padding:20px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);font-weight:600}.field input,.field select,.field textarea{border:1px solid var(--border);border-radius:11px;padding:11px 12px;outline:0;background:#fbfbfe}.field input:focus,.field select:focus,.field textarea:focus{border-color:#b6afff;box-shadow:0 0 0 3px #eeeaff}.modal-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:8px}.danger{background:#fff1f1;color:#b33a3a;border:1px solid #ffd6d6;border-radius:10px;padding:10px 13px}
 .repeat-summary{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fbfbfe;display:flex;justify-content:space-between;align-items:center;gap:10px}.repeat-btn{border:1px solid var(--border);background:#fff;border-radius:11px;padding:11px 12px;text-align:left;width:100%;display:flex;justify-content:space-between;align-items:center}.repeat-modal{width:min(560px,100%)}.repeat-option{padding:13px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;margin-bottom:9px;text-align:left;width:100%}.repeat-option.active{border-color:#6d5dfc;background:#f5f3ff}.repeat-option small{display:block;color:var(--muted);margin-top:3px}.summary-box{background:#f8f8fc;border-radius:14px;padding:14px;margin-top:14px}.money{font-size:18px;font-weight:750}.quick-pay{border:0;background:#e9f8ef;color:#17834d;border-radius:9px;padding:6px 9px;font-weight:700;font-size:11px}.lesson-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}.lesson-row:last-child{border-bottom:0}.month-group{margin-top:14px}.month-title{font-size:13px;font-weight:750;padding:8px 10px;background:#f5f5fa;border-radius:10px}.paid-event{background:#9b9ba3!important;color:#fff}.cancelled-event{background:#3498db!important;color:#fff;opacity:.72;text-decoration:line-through}.week-calendar-wrap{touch-action:pan-y}
 .public-mode body{}.public-only{display:none}.public-mode .app{display:block}.public-mode main{padding:0}.public-mode .sidebar,.public-mode .topbar,.public-mode .subject-chips,.public-mode .mobile-nav{display:none!important}.public-mode .grid-area{border:0;border-radius:0;box-shadow:none;min-height:100vh;background:var(--bg)}.public-mode .calendar-head{justify-content:center;border:0;background:transparent;padding:12px}.public-mode .week-date-row{background:transparent;border:0;padding:4px 12px 14px}.public-mode .week-date-row h2{font-size:22px}.public-mode .week-calendar-wrap{overflow-x:auto}.public-mode .event{font-size:0;color:transparent;pointer-events:none;border-left:0;box-shadow:none;background:#7f8798!important;border-radius:7px}.public-mode .event strong,.public-mode .event .sub{display:none}.public-mode .day-cell{background:linear-gradient(to bottom,rgba(255,255,255,.20) 31px,#cfd5e1 32px,rgba(255,255,255,.20) 33px)}.public-mode .day-summary-cell,.public-mode .time-cell{background:#e1e4ed}.public-mode .day-summary-cell{font-size:0}.public-mode .day-summary-cell *{display:none}.public-mode .week-calendar{min-width:820px}.public-mode .cal-nav button{width:42px;height:42px;font-size:24px}
-.today-column{background:#e8e4ff!important}.today-column::before{content:"";position:absolute;inset:0;pointer-events:none;background:rgba(107,91,255,.07)}.public-mode .today-column{background:#e3defb!important}.public-mode .today-head{background:#dcd6ff!important;color:#5141dc!important}.public-mode .day-cell{cursor:default}
+.today-column{background:#e7e2ff!important;box-shadow:inset 2px 0 0 rgba(81,65,220,.18),inset -2px 0 0 rgba(81,65,220,.18)}.today-column::before{content:"";position:absolute;inset:0;pointer-events:none;background:rgba(107,91,255,.07)}.public-mode .today-column{background:#e3defb!important}.public-mode .today-head{background:#dcd6ff!important;color:#5141dc!important}.public-mode .day-cell{cursor:default}
 .day-summary-cell{min-height:58px;border-right:1px solid var(--border);background:#f6f8fc;padding:7px 5px;text-align:center;font-size:10px;line-height:1.35;font-weight:750;border-bottom:0}.day-summary-cell .paid-count{color:#16834d}.day-summary-cell .unpaid-count{color:#b54735}.day-summary-label{color:#687086;font-size:9px;font-weight:650;margin-bottom:2px}.monthly-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.monthly-col{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}.monthly-col h4{margin:0;padding:11px 13px;font-size:14px}.monthly-col.paid-col h4{background:#eaf8ef;color:#167447}.monthly-col.unpaid-col h4{background:#fff0ed;color:#ad4938}.monthly-item{padding:10px 12px;border-top:1px solid var(--border);font-size:12px}.monthly-total{padding:10px 12px;background:#f7f8fb;font-weight:750;border-top:1px solid var(--border)}
-.subject-chips{display:flex;gap:7px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--border);background:#f8f8fc}.subject-chips button{border:1px solid #d4d8e5;background:#fff;border-radius:11px;padding:8px 11px;font-weight:700;color:#33394b;display:flex;align-items:center;gap:7px}.subject-chips button:hover{border-color:#a69df8;background:#f4f2ff}.week-date-row{padding:10px 16px 12px;text-align:center;background:#fff;border-bottom:1px solid var(--border)}.week-date-row h2{margin:0;font-size:25px;font-weight:800;letter-spacing:-.2px}.phone{font-size:11px;font-weight:700;color:#667085;white-space:nowrap;margin-left:4px}.time-cell{font-size:17px;font-weight:800}.week-calendar .head{font-size:15px}.mobile-nav{display:none}.day-note-btn{margin-top:7px;border:1px solid #8f8bb8;background:#fff;border-radius:9px;padding:5px 11px;font-size:17px;font-weight:900;color:#5141dc;cursor:pointer;line-height:1;box-shadow:0 1px 3px rgba(40,40,80,.12)}.day-note-btn:hover{background:#f1efff}.day-note-text{margin-top:4px;font-size:9px;color:#596176;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.note-modal{width:min(520px,100%)}.note-date{font-weight:750;color:#596176;margin-bottom:8px}.day-note-text.has-note{font-weight:700;color:#4b4f63}
+.subject-chips{display:flex;gap:7px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--border);background:#f8f8fc}.subject-chips button{border:1px solid #d4d8e5;background:#fff;border-radius:11px;padding:8px 11px;font-weight:700;color:#33394b;display:flex;align-items:center;gap:7px}.subject-chips button:hover{border-color:#a69df8;background:#f4f2ff}.subject-chips .legend-static{cursor:default}.subject-chips .legend-static:hover{border-color:#d4d8e5;background:#fff}.week-date-row{padding:10px 16px 12px;text-align:center;background:#fff;border-bottom:1px solid var(--border)}.week-date-row h2{margin:0;font-size:25px;font-weight:800;letter-spacing:-.2px}.phone{font-size:11px;font-weight:700;color:#667085;white-space:nowrap;margin-left:4px}.time-cell{font-size:18px;font-weight:850;letter-spacing:.1px}.week-calendar .head{font-size:16px;font-weight:800}.week-calendar .head b{font-size:17px}.mobile-nav{display:none}.day-note-btn{margin-top:7px;border:1px solid #8f8bb8;background:#fff;border-radius:9px;padding:5px 11px;font-size:17px;font-weight:900;color:#5141dc;cursor:pointer;line-height:1;box-shadow:0 1px 3px rgba(40,40,80,.12)}.day-note-btn:hover{background:#f1efff}.day-note-text{margin-top:4px;font-size:9px;color:#596176;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.note-modal{width:min(520px,100%)}.note-date{font-weight:750;color:#596176;margin-bottom:8px}.day-note-text.has-note{font-weight:700;color:#4b4f63}
 @media(max-width:850px){.monthly-columns{grid-template-columns:1fr}.day-summary-cell{font-size:9px}.sidebar{display:none}.mobile-nav{display:flex;position:fixed;bottom:10px;left:10px;right:10px;background:#fff;border:1px solid var(--border);border-radius:17px;padding:7px;z-index:8;box-shadow:var(--shadow)}.mobile-nav button{flex:1;border:0;background:none;padding:9px;border-radius:11px;color:var(--muted);font-size:12px}.mobile-nav button.active{background:#f0eeff;color:var(--primary);font-weight:700}main{padding:14px 14px 85px}.topbar{align-items:flex-start}.actions .secondary{display:none}.week-calendar{grid-template-columns:58px repeat(7,1fr)}.week-calendar-wrap{overflow-x:auto}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.stat-grid{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:auto}.search{width:48vw}}
 
-/* NOWY GÓRNY BIAŁY PASEK */
-body{overflow-x:hidden}
-.app{display:block;min-height:100vh}
-.sidebar{display:none!important}
-.top-strip{
- position:sticky;top:0;z-index:20;width:100%;background:#fff;
- border-bottom:1px solid var(--border);box-shadow:0 5px 18px rgba(32,42,70,.10);
- padding:12px 18px;display:flex;align-items:center;gap:16px;min-height:82px
-}
-.top-strip-brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-.top-strip-brand h1{font-size:17px;margin:0;white-space:nowrap}
-.top-strip-brand p{font-size:11px;color:var(--muted);margin:2px 0 0}
-.top-strip-nav{display:flex;gap:5px;flex:0 0 auto}
-.top-strip-nav button{border:0;background:#f5f5fa;color:#55586c;padding:9px 12px;border-radius:11px;white-space:nowrap;font-weight:650}
-.top-strip-nav button.active,.top-strip-nav button:hover{background:#f0eeff;color:var(--primary)}
-.top-strip-colors{display:flex;align-items:center;gap:5px;overflow-x:auto;min-width:0;flex:1;padding:2px 0}
-.top-strip-label{font-size:9px;color:#999cad;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;margin-right:3px;font-weight:800}
-.top-strip .legend-item{flex:0 0 auto;border:1px solid #e1e3eb;background:#fff;padding:7px 9px;font-size:11px;white-space:nowrap}
-.top-strip .legend-item:hover{background:#f5f3ff;color:var(--primary)}
-main{padding:18px 22px;min-width:0}
-
-/* BIEŻĄCY DZIEŃ — wyraźne wyróżnienie + podkreślenie daty */
-.week-calendar .head.today-head{
- color:var(--primary);background:#e9e5ff;box-shadow:inset 0 -4px 0 var(--primary)
-}
-.week-calendar .head.today-head b{
- display:inline-block;color:var(--primary);border-bottom:3px solid #ff1493;
- padding:1px 5px 2px;border-radius:2px
-}
-.day-cell.today-column{
- background:linear-gradient(to right,rgba(81,65,220,.10),rgba(255,20,147,.07)),
- linear-gradient(to bottom,rgba(255,255,255,.20) 31px,#cfd5e1 32px,rgba(255,255,255,.20) 33px)!important;
- box-shadow:inset 2px 0 0 rgba(81,65,220,.45),inset -2px 0 0 rgba(81,65,220,.45)
-}
-.day-cell.today-column::before{
- content:"";position:absolute;inset:0;border-top:2px solid rgba(255,20,147,.30);
- pointer-events:none;z-index:1
-}
-.event.private-event{background:#ff1493!important}
-
-/* Telefon/tablet */
-@media(max-width:850px){
- .top-strip{position:sticky;top:0;padding:9px 10px;gap:8px;min-height:72px;flex-wrap:wrap}
- .top-strip-brand{min-width:155px}
- .top-strip-brand .logo{width:36px;height:36px;border-radius:11px}
- .top-strip-brand h1{font-size:14px}
- .top-strip-brand p{font-size:9px}
- .top-strip-nav{order:2;width:100%}
- .top-strip-nav button{flex:1;padding:7px 8px;font-size:11px}
- .top-strip-colors{order:3;width:100%;flex-basis:100%}
- .top-strip-label{display:none}
- .top-strip .legend-item{font-size:10px;padding:6px 8px}
- main{padding:12px 12px 85px}
-}
-
-</style>
-
-<style>
-/* Public booking view */
-body.booking-mode .app-shell > .sidebar,
-body.booking-mode .app-shell > .main > .topbar,
-body.booking-mode .app-shell > .main > .content > *:not(#calendarContainer) {display:none!important}
-body.booking-mode .app-shell,.booking-mode .main,.booking-mode #calendarContainer{width:100%!important;max-width:none!important;margin:0!important}
-body.booking-mode{background:#eef0f6}
-body.booking-mode .booking-header{display:flex!important}
-.booking-header{display:none;align-items:center;justify-content:space-between;padding:18px 22px;background:#fff;border-bottom:1px solid #cfd5e2}
-.booking-title{font-size:20px;font-weight:800;color:#24283a}.booking-sub{font-size:12px;color:#626a7e;margin-top:3px}
-.booking-free{background:#eef8f2;border:1px solid #b8dec7;border-radius:10px;padding:8px 12px;font-weight:750;color:#207347}
-.booking-busy{background:#d4d7df!important;opacity:.9;cursor:not-allowed!important}
-.booking-slot{position:absolute;left:3px;right:3px;border-radius:10px;padding:7px;color:#fff;font-size:11px;font-weight:750;cursor:pointer}
-.booking-slot:hover{filter:brightness(.96)}
-.booking-modal{position:fixed;inset:0;background:rgba(20,24,40,.45);display:none;align-items:center;justify-content:center;z-index:1000;padding:18px}
-.booking-modal.open{display:flex}.booking-card{width:min(480px,100%);background:#fff;border-radius:18px;box-shadow:0 20px 60px rgba(20,24,40,.22);padding:22px}
-.booking-card h3{margin:0 0 5px}.booking-card .details{margin-bottom:16px}
-.booking-card input,.booking-card select{width:100%;padding:11px;border:1px solid #cfd5e2;border-radius:10px;margin:5px 0 12px;box-sizing:border-box;font:inherit}
-.booking-actions{display:flex;gap:8px;justify-content:flex-end}.booking-actions button{padding:10px 15px;border-radius:10px;border:0;font-weight:750}.booking-cancel{background:#edf0f5}.booking-submit{background:#5b4df5;color:#fff}
-.remote-alert{display:inline-flex;align-items:center;justify-content:center;background:#e53935;color:#fff;border-radius:50%;width:19px;height:19px;font-size:13px;font-weight:900;margin-left:5px}
+.page-footer-summary{margin-top:14px;background:#fff;border:1px solid var(--border);border-radius:15px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;box-shadow:0 5px 18px rgba(32,42,70,.06)}
+.page-footer-summary .footer-counts{display:flex;gap:8px;flex-wrap:wrap}.footer-note{color:var(--muted);font-size:12px}
+.monthly-table{margin-top:14px;border:1px solid var(--border);border-radius:14px;overflow:hidden}.monthly-table-row{display:grid;grid-template-columns:1.25fr .8fr .8fr .9fr .9fr;gap:8px;padding:10px 12px;border-top:1px solid var(--border);align-items:center;font-size:12px}.monthly-table-row:first-child{border-top:0}.monthly-table-row.header{background:#f5f5fa;font-weight:800;font-size:11px;color:#596176}.monthly-table-row .green{color:#16834d;font-weight:800}.monthly-table-row .red{color:#b54735;font-weight:800}.report-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.report-controls select{border:1px solid var(--border);border-radius:10px;padding:8px 10px;background:#fff}
+@media(max-width:850px){.sidebar{display:none}.page-footer-summary{margin-bottom:72px}.monthly-table-row{grid-template-columns:1.2fr .7fr .7fr .8fr .8fr}.monthly-table-row{font-size:11px}.monthly-table-row.header{font-size:10px}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top-strip">
-    <div class="top-strip-brand">
-      <div class="logo">M</div>
-      <div><h1>Mój Kalendarz</h1><p>Lekcje i uczniowie</p></div>
-    </div>
-    <nav class="top-strip-nav">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">M</div><div><h1>Mój Kalendarz</h1><p>Lekcje i uczniowie</p></div></div>
+    <nav class="nav">
       <button id="navCalendar" class="active" onclick="showPage('calendar')">📅 Kalendarz</button>
       <button id="navStudents" onclick="showPage('students')">👩‍🎓 Uczniowie</button>
     </nav>
-    <div class="top-strip-colors">
-      <div class="top-strip-label">KOLORY SPOTKAŃ</div>
-      <button class="legend-item" onclick="openSubjectReport('MBank Edyta')"><span class="dot" style="background:#e53935"></span>MBank Edyta <span class="phone">453 318 710</span></button>
-      <button class="legend-item" onclick="openSubjectReport('MBank Marcin')"><span class="dot" style="background:#f2c94c"></span>MBank Marcin <span class="phone">578 042 609</span></button>
-      <button class="legend-item" onclick="openSubjectReport('Millenium Edyta')"><span class="dot" style="background:#8e44ad"></span>Millenium Edyta <span class="phone">791 697 039</span></button>
-      <button class="legend-item" onclick="openSubjectReport('Millenium Marcin')"><span class="dot" style="background:#27ae60"></span>Millenium Marcin <span class="phone">570 452 365</span></button>
-      <button class="legend-item" onclick="openSubjectReport('Prywatne')"><span class="dot" style="background:#ff1493"></span>Prywatne</button>
-      <button class="legend-item" onclick="openSubjectReport('Inne')"><span class="dot" style="background:#d95776"></span>Inne</button>
-      <button class="legend-item" onclick="openSubjectReport('Lekcja odwołana')"><span class="dot" style="background:#3498db"></span>Odwołana</button>
-      <span class="legend-item"><span class="dot" style="background:#9b9ba3"></span>Opłacona</span>
+    <div class="side-section">
+      <div class="side-title">Kolory spotkań · v5</div>
+      <div class="legend-item" onclick="openSubjectReport('MBank Edyta')"><span class="dot" style="background:#e53935"></span>MBank Edyta <span class="phone">453 318 710</span></div>
+      <div class="legend-item" onclick="openSubjectReport('MBank Marcin')"><span class="dot" style="background:#f2c94c"></span>MBank Marcin <span class="phone">578 042 609</span></div>
+      <div class="legend-item" onclick="openSubjectReport('Millenium Edyta')"><span class="dot" style="background:#8e44ad"></span>Millenium Edyta <span class="phone">791 697 039</span></div>
+      <div class="legend-item" onclick="openSubjectReport('Millenium Marcin')"><span class="dot" style="background:#27ae60"></span>Millenium Marcin <span class="phone">570 452 365</span></div>
+      <div class="legend-item" onclick="openSubjectReport('Prywatne')"><span class="dot" style="background:#ff1493"></span>Prywatne</div>
+      <div class="legend-item"><span class="dot" style="background:#d95776"></span>Inne</div><div class="legend-item"><span class="dot" style="background:#3498db"></span>Lekcja odwołana</div><div class="legend-item"><span class="dot" style="background:#9b9ba3"></span>Opłacona</div>
     </div>
-  </div>
+  </aside>
   <main>
     <section id="calendarPage" class="page active">
   <div class="topbar">
@@ -142,6 +66,14 @@ body.booking-mode .booking-header{display:flex!important}
       <div class="cal-nav"><button onclick="changeWeek(-1)" aria-label="Poprzedni tydzień">‹</button><button onclick="changeWeek(1)" aria-label="Następny tydzień">›</button></div>
     </div>
     <div class="week-date-row"><h2 id="weekTitle"></h2></div>
+    <div class="subject-chips">
+      <button onclick="openSubjectReport('MBank Edyta')"><span class="dot" style="background:#e53935"></span>MBank Edyta <span class="phone">453 318 710</span></button>
+      <button onclick="openSubjectReport('MBank Marcin')"><span class="dot" style="background:#f2c94c"></span>MBank Marcin <span class="phone">578 042 609</span></button>
+      <button onclick="openSubjectReport('Millenium Edyta')"><span class="dot" style="background:#8e44ad"></span>Millenium Edyta <span class="phone">791 697 039</span></button>
+      <button onclick="openSubjectReport('Millenium Marcin')"><span class="dot" style="background:#27ae60"></span>Millenium Marcin <span class="phone">570 452 365</span></button>
+      <button onclick="openSubjectReport('Prywatne')"><span class="dot" style="background:#ff1493"></span>Prywatne</button>
+      <button onclick="openSubjectReport('Lekcja odwołana')"><span class="dot" style="background:#3498db"></span>Lekcja odwołana</button><button class="legend-static"><span class="dot" style="background:#9b9ba3"></span>Opłacona</button>
+    </div>
     <div id="calendarContainer" class="week-calendar-wrap"></div>
   </div>
 </section>
@@ -152,6 +84,7 @@ body.booking-mode .booking-header{display:flex!important}
       </div>
       <div id="stats" class="stat-grid"></div><div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"><button class="secondary" onclick="showMonthlyReport()">📊 Rozliczenie miesiąca</button><button class="secondary" onclick="printReport()">🖨️ Drukuj / zapisz PDF</button><span class="details" style="align-self:center">💾 Dane zapisują się automatycznie na tym urządzeniu.</span></div>
       <div id="studentList" class="student-list"></div>
+      <div class="page-footer-summary"><div class="footer-counts"><span class="badge paid" id="studentsPaidFooter">✓ Opłacone: 0</span><span class="badge unpaid" id="studentsUnpaidFooter">! Nieopłacone: 0</span></div><div class="footer-note">📝 Notatki dnia są dostępne na dole każdej kolumny kalendarza.</div></div>
     </section>
   </main>
 </div>
@@ -278,10 +211,10 @@ function showMonthlyReport(){
 function printReport(){
  const body=document.getElementById('reportBody')?.innerHTML||'';
  const w=window.open('','_blank');
- if(!w){alert('Przeglądarka zablokowała nowe okno. Zezwól na wyskakujące okna i spróbuj ponownie.');return}
- w.document.write('<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>Rozliczenie lekcji</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding:30px;color:#222}.lesson-row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #ddd}.badge{padding:5px 9px;border-radius:12px;background:#eee}.paid{background:#e8f8ef;color:#167447}.unpaid{background:#fff0ee;color:#ad4938}.details{color:#777;font-size:12px}.monthly-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}.monthly-col{border:1px solid #ddd;border-radius:12px;overflow:hidden}.monthly-col h4{margin:0;padding:11px}.monthly-item{padding:9px 11px;border-top:1px solid #eee}.monthly-total{padding:10px;background:#f7f7fa;font-weight:700;border-top:1px solid #ddd}@media(max-width:700px){.monthly-columns{grid-template-columns:1fr}}</style></head><body>'+body+'</body></html>');
- w.document.close();
- setTimeout(()=>w.print(),200);
+ if(!w){alert('Przeglądarka zablokowała okno drukowania. Zezwól na wyskakujące okna.');return}
+ const html=`<html><head><title>Rozliczenie lekcji</title><style>
+ body{font-family:Arial,sans-serif;padding:30px;color:#222}h3{margin-top:0}.lesson-row{display:flex;justify-content:space-between;gap:15px;padding:12px 0;border-bottom:1px solid #ddd}.badge{padding:5px 9px;border-radius:12px;background:#eee}.paid{background:#e8f8ef;color:#167447}.unpaid{background:#fff0ee;color:#ad4938}.details{color:#777;font-size:12px}.monthly-table{margin-top:14px;border:1px solid #ddd;border-radius:10px;overflow:hidden}.monthly-table-row{display:grid;grid-template-columns:1.3fr .7fr .9fr .9fr .8fr;gap:8px;padding:10px;border-top:1px solid #ddd}.monthly-table-row:first-child{border-top:0}.monthly-table-row.header{background:#f5f5f5;font-weight:bold;font-size:11px}.green{color:#167447;font-weight:bold}.red{color:#ad4938;font-weight:bold}.monthly-item{padding:10px}.summary-box{padding:12px;background:#f6f6f6;border-radius:10px}</style></head><body>${body}</body></html>`;
+ w.document.open();w.document.write(html);w.document.close();w.focus();setTimeout(()=>w.print(),150);
 }
 
 function encodePublicEvents(){
@@ -312,7 +245,7 @@ function renderCalendar(){document.getElementById('weekTitle').textContent=weekL
 function renderWeek(){
  const a=mondayOf(current),days=[];for(let i=0;i<7;i++){let d=new Date(a);d.setDate(a.getDate()+i);days.push(d)}
  const isPublic=document.documentElement.classList.contains('public-mode');
- let h='<div class="week-calendar"><div class="head"></div>'+days.map(d=>{const iso=d.toISOString().slice(0,10);return `<div class="head ${iso===todayStr()?'today-head':''}">${d.toLocaleDateString('pl-PL',{weekday:'short'})}<br><b>${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}</b></div>`}).join('');
+ let h='<div class="week-calendar"><div class="head"></div>'+days.map(d=>{const iso=d.toISOString().slice(0,10);return `<div class="head ${iso===todayStr()?'today-head':''}">${d.toLocaleDateString('pl-PL',{weekday:'short'})}${iso===todayStr()?'<br><span style="font-size:9px;letter-spacing:.08em">DZISIAJ</span>':''}<br><b>${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}</b></div>`}).join('');
  for(let hour=6;hour<=22;hour++){
    h+=`<div class="time-cell">${String(hour).padStart(2,'0')}:00</div>`;
    days.forEach(d=>{
@@ -324,7 +257,7 @@ function renderWeek(){
          h+=`<div class="event public-event" style="top:${top}px;height:${ht}px;background:#7f8798!important" aria-label="Termin zajęty"></div>`;
        }else{
          const st=getStudent(e.studentId);if(!st)return;
-         const cls=e.status==='cancelled'?'cancelled-event':e.subject==='Prywatne'?'private-event':e.paid==='paid'?'paid-event':'';
+         const cls=e.status==='cancelled'?'cancelled-event':e.paid==='paid'?'paid-event':'';
          const bg=e.status==='cancelled'?'#3498db':e.paid==='paid'?'#9699a3':(COLORS[e.subject]||COLORS.Inne);
          h+=`<div class="event ${cls}" style="top:${top}px;height:${ht}px;background:${bg}" onclick="event.stopPropagation();openEventModal('${e.id}')"><strong onclick="event.stopPropagation();openStudentMonthModal('${e.studentId}','${e.date}')">${esc(st.name)}</strong><div class="sub">${esc(e.time)} · ${esc(e.subject)} ${e.paid==='paid'?'✓':''}</div></div>`;
        }
@@ -429,13 +362,24 @@ function addRecurringEvents(base){
 }
 function deleteEvent(){if(confirm('Usunąć tę lekcję?')){data.events=data.events.filter(e=>e.id!==editEventId);saveData();closeModal('eventOverlay');renderCalendar();renderStudents()}}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
+function subjectMonthKey(e){const d=dateOnly(e.date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function monthLabelKey(key){const [y,m]=key.split('-').map(Number);return new Date(y,m-1,1).toLocaleDateString('pl-PL',{month:'long',year:'numeric'})}
 function openSubjectReport(subject){
- const d=current instanceof Date?current:new Date(), y=d.getFullYear(), m=d.getMonth();
- const monthName=d.toLocaleDateString('pl-PL',{month:'long',year:'numeric'});
- const evs=data.events.filter(e=>e.subject===subject&&dateOnly(e.date).getFullYear()===y&&dateOnly(e.date).getMonth()===m);
- const normal=evs.filter(e=>e.status!=='cancelled'), paid=normal.filter(e=>e.paid==='paid'), unpaid=normal.filter(e=>e.paid!=='paid'), cancelled=evs.filter(e=>e.status==='cancelled');
- const item=arr=>arr.length?arr.map(e=>`<div class="monthly-item"><b>${fmtDate(e.date)}</b> · ${esc(e.time||'')} · ${esc(getStudent(e.studentId)?.name||'')}</div>`).join(''):`<div class="monthly-item details">Brak lekcji.</div>`;
- document.getElementById('reportBody').innerHTML=`<h3 style="margin:0">${esc(subject)} — ${esc(monthName)}</h3><div class="details" style="margin-top:4px">Łącznie lekcji: <b>${normal.length}</b> · opłacone: <b>${paid.length}</b> · nieopłacone: <b>${unpaid.length}</b></div><div class="monthly-columns"><div class="monthly-col paid-col"><h4>✓ Opłacone (${paid.length})</h4>${item(paid)}<div class="monthly-total">Razem: ${paid.reduce((a,e)=>a+Number(e.price||0),0)} zł</div></div><div class="monthly-col unpaid-col"><h4>! Nieopłacone (${unpaid.length})</h4>${item(unpaid)}<div class="monthly-total">Do zapłaty: ${unpaid.reduce((a,e)=>a+Number(e.price||0),0)} zł</div></div></div>${cancelled.length?`<div class="summary-box"><b>Odwołane: ${cancelled.length}</b></div>`:''}`;
+ const evs=data.events.filter(e=>e.subject===subject&&e.date);
+ const groups={};
+ evs.forEach(e=>{const key=subjectMonthKey(e);(groups[key]??=[]).push(e)});
+ const keys=Object.keys(groups).sort((a,b)=>b.localeCompare(a));
+ const normal=e=>e.status!=='cancelled', paid=e=>normal(e)&&e.paid==='paid', unpaid=e=>normal(e)&&e.paid!=='paid';
+ const totalPaid=evs.filter(paid).length, totalUnpaid=evs.filter(unpaid).length, totalLessons=totalPaid+totalUnpaid;
+ const rows=keys.map(key=>{
+   const arr=groups[key], p=arr.filter(paid), u=arr.filter(unpaid), c=arr.filter(e=>e.status==='cancelled');
+   const pm=p.reduce((a,e)=>a+Number(e.price||0),0), um=u.reduce((a,e)=>a+Number(e.price||0),0);
+   return `<div class="monthly-table-row"><b>${esc(monthLabelKey(key))}</b><span>${p.length+u.length}</span><span class="green">${p.length} · ${pm} zł</span><span class="red">${u.length} · ${um} zł</span><span>${c.length?'Odwołane: '+c.length:'—'}</span></div>`;
+ }).join('');
+ document.getElementById('reportBody').innerHTML=`<h3 style="margin:0">${esc(subject)}</h3>
+ <div class="details" style="margin-top:5px">Podsumowanie wszystkich miesięcy zapisanych w kalendarzu.</div>
+ <div class="report-controls"><span class="badge">Wszystkie lekcje: ${totalLessons}</span><span class="badge paid">Opłacone: ${totalPaid}</span><span class="badge unpaid">Oczekuje na zapłatę: ${totalUnpaid}</span></div>
+ <div class="monthly-table"><div class="monthly-table-row header"><span>Miesiąc</span><span>Razem</span><span>✓ Opłacone</span><span>! Nieopłacone</span><span>Odwołane</span></div>${rows||'<div class="monthly-item details">Brak lekcji dla tej kategorii.</div>'}</div>`;
  document.getElementById('reportOverlay').classList.add('open');
 }
 
@@ -474,7 +418,7 @@ function deleteStudent(){if(confirm('Usunąć ucznia oraz wszystkie jego lekcje?
 function renderStudents(){
  const q=(document.getElementById('studentSearch')?.value||'').toLowerCase(),list=document.getElementById('studentList'),stats=document.getElementById('stats'),shown=data.students.filter(s=>s.name.toLowerCase().includes(q));
  const unpaid=data.events.filter(e=>e.paid!=='paid'&&e.status!=='cancelled');
- stats.innerHTML=`<div class="stat"><div class="num">${data.students.length}</div><div class="lbl">uczniów</div></div><div class="stat"><div class="num">${unpaid.length}</div><div class="lbl">nieopłaconych lekcji</div></div><div class="stat"><div class="num">${unpaid.reduce((a,e)=>a+Number(e.price||0),0)} zł</div><div class="lbl">do zapłaty</div></div>`;
+ stats.innerHTML=`<div class="stat"><div class="num">${data.students.length}</div><div class="lbl">uczniów</div></div><div class="stat"><div class="num">${unpaid.length}</div><div class="lbl">nieopłaconych lekcji</div></div><div class="stat"><div class="num">${unpaid.reduce((a,e)=>a+Number(e.price||0),0)} zł</div><div class="lbl">do zapłaty</div></div>`; const paidAll=data.events.filter(e=>e.paid==='paid'&&e.status!=='cancelled').length;document.getElementById('studentsPaidFooter').textContent='✓ Opłacone: '+paidAll;document.getElementById('studentsUnpaidFooter').textContent='! Nieopłacone: '+unpaid.length;
  list.innerHTML=shown.length?shown.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>{let evs=data.events.filter(e=>e.studentId===s.id&&e.status!=='cancelled'),un=evs.filter(e=>e.paid!=='paid').length;return `<div class="student-card" onclick="openStudentModal('${s.id}')"><div class="student-main"><div class="avatar">${esc(s.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase())}</div><div><b>${esc(s.name)}</b><div class="details">${esc(s.className||'')} ${s.phone?'· '+esc(s.phone):''}</div></div></div><div>${un?`<span class="badge unpaid">${un} nieopł.</span>`:'<span class="badge paid">Opłacone</span>'}</div></div>`}).join(''):'<div class="empty-state">Brak uczniów pasujących do wyszukiwania.</div>'
 }
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kalendarz-uczniow-kopia.json';a.click();URL.revokeObjectURL(a.href)}
