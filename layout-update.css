@@ -1,0 +1,73 @@
+/* MÓJ KALENDARZ v13 — AKTUALIZACJA UKŁADU
+   Wklej TEN BLOK na końcu istniejącego <style> w index.html.
+   Przenosi cały biały panel z lewej strony nad kalendarz.
+*/
+.app{
+  min-height:100vh;
+  display:block;
+}
+.sidebar{
+  width:auto;
+  height:auto;
+  position:relative;
+  top:auto;
+  overflow:visible;
+  background:#fff;
+  border-right:0;
+  border-bottom:1px solid var(--border);
+  padding:14px 18px;
+  box-shadow:0 3px 14px rgba(32,42,70,.08);
+}
+.brand{
+  margin-bottom:10px;
+}
+.nav{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.nav button{
+  width:auto;
+  margin:0;
+}
+.side-section{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  flex-wrap:wrap;
+}
+.side-title{
+  margin:0 8px 0 0;
+}
+main{
+  flex:initial;
+  width:100%;
+  min-width:0;
+  padding:18px;
+}
+
+/* Na małym ekranie biały pasek nadal pozostaje NAD kalendarzem. */
+@media(max-width:850px){
+  .sidebar{
+    display:block;
+    padding:10px;
+  }
+  .brand{
+    margin-bottom:8px;
+  }
+  .nav{
+    margin-bottom:4px;
+  }
+  .side-section{
+    margin-top:6px;
+  }
+  main{
+    padding:14px 14px 85px;
+  }
+}
+
+/* Publiczny widok ucznia nadal ukrywa panel właściciela. */
+.public-mode .sidebar{
+  display:none!important;
+}
