@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#6d5dfc">
-<title>Mój Kalendarz Lekcji — v9</title>
+<title>Mój Kalendarz Lekcji — v12</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,7 +26,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
 .overlay{display:none;position:fixed;inset:0;background:rgba(20,22,35,.45);z-index:10;padding:18px;overflow:auto}.overlay.open{display:flex;align-items:center;justify-content:center}.modal{width:min(780px,100%);background:#fff;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden}.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font-size:19px}.close{border:0;background:#f3f3f8;border-radius:10px;width:36px;height:36px}.modal-body{padding:20px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);font-weight:600}.field input,.field select,.field textarea{border:1px solid var(--border);border-radius:11px;padding:11px 12px;outline:0;background:#fbfbfe}.field input:focus,.field select:focus,.field textarea:focus{border-color:#b6afff;box-shadow:0 0 0 3px #eeeaff}.modal-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:8px}.danger{background:#fff1f1;color:#b33a3a;border:1px solid #ffd6d6;border-radius:10px;padding:10px 13px}
 .repeat-summary{border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:#fbfbfe;display:flex;justify-content:space-between;align-items:center;gap:10px}.repeat-btn{border:1px solid var(--border);background:#fff;border-radius:11px;padding:11px 12px;text-align:left;width:100%;display:flex;justify-content:space-between;align-items:center}.repeat-modal{width:min(560px,100%)}.repeat-option{padding:13px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;margin-bottom:9px;text-align:left;width:100%}.repeat-option.active{border-color:#6d5dfc;background:#f5f3ff}.repeat-option small{display:block;color:var(--muted);margin-top:3px}.summary-box{background:#f8f8fc;border-radius:14px;padding:14px;margin-top:14px}.money{font-size:18px;font-weight:750}.quick-pay{border:0;background:#e9f8ef;color:#17834d;border-radius:9px;padding:6px 9px;font-weight:700;font-size:11px}.lesson-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}.lesson-row:last-child{border-bottom:0}.month-group{margin-top:14px}.month-title{font-size:13px;font-weight:750;padding:8px 10px;background:#f5f5fa;border-radius:10px}.paid-event{background:#9b9ba3!important;color:#fff}.cancelled-event{background:#3498db!important;color:#fff;opacity:.72;text-decoration:line-through}.week-calendar-wrap{touch-action:pan-y}
 .day-summary-cell{min-height:58px;border-right:1px solid var(--border);background:#f6f8fc;padding:7px 5px;text-align:center;font-size:10px;line-height:1.35;font-weight:750;border-bottom:0}.day-summary-cell .paid-count{color:#16834d}.day-summary-cell .unpaid-count{color:#b54735}.day-summary-label{color:#687086;font-size:9px;font-weight:650;margin-bottom:2px}.monthly-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.monthly-col{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}.monthly-col h4{margin:0;padding:11px 13px;font-size:14px}.monthly-col.paid-col h4{background:#eaf8ef;color:#167447}.monthly-col.unpaid-col h4{background:#fff0ed;color:#ad4938}.monthly-item{padding:10px 12px;border-top:1px solid var(--border);font-size:12px}.monthly-total{padding:10px 12px;background:#f7f8fb;font-weight:750;border-top:1px solid var(--border)}
-.subject-chips{display:flex;gap:7px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--border);background:#f8f8fc}.subject-chips button{border:1px solid #d4d8e5;background:#fff;border-radius:11px;padding:8px 11px;font-weight:700;color:#33394b;display:flex;align-items:center;gap:7px}.subject-chips button:hover{border-color:#a69df8;background:#f4f2ff}.week-date-row{padding:10px 16px 12px;text-align:center;background:#fff;border-bottom:1px solid var(--border)}.week-date-row h2{margin:0;font-size:25px;font-weight:800;letter-spacing:-.2px}.phone{font-size:11px;font-weight:700;color:#667085;white-space:nowrap;margin-left:4px}.time-cell{font-size:17px;font-weight:800}.week-calendar .head{font-size:15px}.mobile-nav{display:none}
+.subject-chips{display:flex;gap:7px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--border);background:#f8f8fc}.subject-chips button{border:1px solid #d4d8e5;background:#fff;border-radius:11px;padding:8px 11px;font-weight:700;color:#33394b;display:flex;align-items:center;gap:7px}.subject-chips button:hover{border-color:#a69df8;background:#f4f2ff}.week-date-row{padding:10px 16px 12px;text-align:center;background:#fff;border-bottom:1px solid var(--border)}.week-date-row h2{margin:0;font-size:25px;font-weight:800;letter-spacing:-.2px}.phone{font-size:11px;font-weight:700;color:#667085;white-space:nowrap;margin-left:4px}.time-cell{font-size:17px;font-weight:800}.week-calendar .head{font-size:15px}.mobile-nav{display:none}.day-note-btn{margin-top:7px;border:1px solid #8f8bb8;background:#fff;border-radius:9px;padding:5px 11px;font-size:17px;font-weight:900;color:#5141dc;cursor:pointer;line-height:1;box-shadow:0 1px 3px rgba(40,40,80,.12)}.day-note-btn:hover{background:#f1efff}.day-note-text{margin-top:4px;font-size:9px;color:#596176;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.note-modal{width:min(520px,100%)}.note-date{font-weight:750;color:#596176;margin-bottom:8px}.day-note-text.has-note{font-weight:700;color:#4b4f63}
 @media(max-width:850px){.monthly-columns{grid-template-columns:1fr}.day-summary-cell{font-size:9px}.sidebar{display:none}.mobile-nav{display:flex;position:fixed;bottom:10px;left:10px;right:10px;background:#fff;border:1px solid var(--border);border-radius:17px;padding:7px;z-index:8;box-shadow:var(--shadow)}.mobile-nav button{flex:1;border:0;background:none;padding:9px;border-radius:11px;color:var(--muted);font-size:12px}.mobile-nav button.active{background:#f0eeff;color:var(--primary);font-weight:700}main{padding:14px 14px 85px}.topbar{align-items:flex-start}.actions .secondary{display:none}.week-calendar{grid-template-columns:58px repeat(7,1fr)}.week-calendar-wrap{overflow-x:auto}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.stat-grid{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:auto}.search{width:48vw}}
 </style>
 </head>
@@ -44,13 +44,14 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
       <div class="legend-item" onclick="openSubjectReport('MBank Marcin')"><span class="dot" style="background:#f2c94c"></span>MBank Marcin <span class="phone">578 042 609</span></div>
       <div class="legend-item" onclick="openSubjectReport('Millenium Edyta')"><span class="dot" style="background:#8e44ad"></span>Millenium Edyta <span class="phone">791 697 039</span></div>
       <div class="legend-item" onclick="openSubjectReport('Millenium Marcin')"><span class="dot" style="background:#27ae60"></span>Millenium Marcin <span class="phone">570 452 365</span></div>
+      <div class="legend-item" onclick="openSubjectReport('Prywatne')"><span class="dot" style="background:#00897b"></span>Prywatne</div>
       <div class="legend-item"><span class="dot" style="background:#d95776"></span>Inne</div><div class="legend-item"><span class="dot" style="background:#3498db"></span>Lekcja odwołana</div><div class="legend-item"><span class="dot" style="background:#9b9ba3"></span>Opłacona</div>
     </div>
   </aside>
   <main>
     <section id="calendarPage" class="page active">
   <div class="topbar">
-    <div class="title-row"><button class="today" onclick="goToday()">Dziś</button></div>
+    <div class="title-row"></div>
     <div class="actions"><button class="secondary" onclick="exportData()">Eksport danych</button><button class="primary" onclick="openEventModal()">＋ Nowa lekcja</button></div>
   </div>
   <div class="grid-area">
@@ -63,6 +64,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
       <button onclick="openSubjectReport('MBank Marcin')"><span class="dot" style="background:#f2c94c"></span>MBank Marcin <span class="phone">578 042 609</span></button>
       <button onclick="openSubjectReport('Millenium Edyta')"><span class="dot" style="background:#8e44ad"></span>Millenium Edyta <span class="phone">791 697 039</span></button>
       <button onclick="openSubjectReport('Millenium Marcin')"><span class="dot" style="background:#27ae60"></span>Millenium Marcin <span class="phone">570 452 365</span></button>
+      <button onclick="openSubjectReport('Prywatne')"><span class="dot" style="background:#00897b"></span>Prywatne</button>
       <button onclick="openSubjectReport('Lekcja odwołana')"><span class="dot" style="background:#3498db"></span>Lekcja odwołana</button>
     </div>
     <div id="calendarContainer" class="week-calendar-wrap"></div>
@@ -96,6 +98,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
 <option value="MBank Marcin">🟡 MBank Marcin</option>
 <option value="Millenium Edyta">🟣 Millenium Edyta</option>
 <option value="Millenium Marcin">🟢 Millenium Marcin</option>
+<option value="Prywatne">🟢 Prywatne</option>
 <option value="Lekcja odwołana">🔵 Lekcja odwołana</option>
 </select></div>
         <div class="field"><label>Data</label><input id="eDate" type="date"></div>
@@ -132,7 +135,7 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
 
 <div id="repeatOverlay" class="overlay">
   <div class="modal repeat-modal">
-    <div class="modal-head"><h3>Ustaw powtarzanie</h3><button class="close" onclick="closeModal('repeatOverlay')">✕</button></div>
+    <div class="modal-head"><h3>Ustaw powtarzanie</h3><button class="close" onclick="closeModal('repeatOverlay');closeModal('dayNoteOverlay')">✕</button></div>
     <div class="modal-body">
       <div class="details" style="margin-bottom:12px">Wybierz, jak często ma odbywać się ta lekcja.</div>
       <button type="button" class="repeat-option" data-repeat="none" onclick="chooseRepeat('none')"><b>Jednorazowo</b><small>Lekcja odbędzie się tylko raz.</small></button>
@@ -145,14 +148,15 @@ main{flex:1;padding:22px;min-width:0}.topbar{display:flex;align-items:center;jus
         <span class="details">Lekcje będą zaplanowane do tej daty włącznie.</span>
       </div>
     </div>
-    <div class="modal-foot"><button class="secondary" onclick="closeModal('repeatOverlay')">Anuluj</button><button class="primary" onclick="saveRepeatSettings()">Zapisz</button></div>
+    <div class="modal-foot"><button class="secondary" onclick="closeModal('repeatOverlay');closeModal('dayNoteOverlay')">Anuluj</button><button class="primary" onclick="saveRepeatSettings()">Zapisz</button></div>
   </div>
 </div>
-<div id="paymentOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>💰 Płatności</h3><button class="close" onclick="closeModal('paymentOverlay')">✕</button></div><div class="modal-body" id="paymentBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('paymentOverlay')">Zamknij</button></div></div></div><div id="reportOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>Rozliczenie miesiąca</h3><button class="close" onclick="closeModal('reportOverlay')">✕</button></div><div class="modal-body" id="reportBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('reportOverlay')">Zamknij</button><button class="primary" onclick="printReport()">🖨️ Drukuj / PDF</button></div></div></div><script>
-const COLORS={'MBank Edyta':'#e53935','MBank Marcin':'#f2c94c','Millenium Edyta':'#8e44ad','Millenium Marcin':'#27ae60','Lekcja odwołana':'#3498db',Inne:'#d95776'};
+<div id="dayNoteOverlay" class="overlay"><div class="modal note-modal"><div class="modal-head"><h3>📝 Notatka dnia</h3><button class="close" onclick="closeModal('dayNoteOverlay')">✕</button></div><div class="modal-body"><div id="dayNoteDate" class="note-date"></div><textarea id="dayNoteText" rows="8" placeholder="Wpisz notatkę dotyczącą tego dnia..."></textarea></div><div class="modal-foot"><button class="secondary" onclick="closeModal('dayNoteOverlay')">Anuluj</button><button class="primary" onclick="saveDayNote()">Zapisz notatkę</button></div></div></div><div id="paymentOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>💰 Płatności</h3><button class="close" onclick="closeModal('paymentOverlay')">✕</button></div><div class="modal-body" id="paymentBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('paymentOverlay')">Zamknij</button></div></div></div><div id="reportOverlay" class="overlay"><div class="modal"><div class="modal-head"><h3>Rozliczenie miesiąca</h3><button class="close" onclick="closeModal('reportOverlay')">✕</button></div><div class="modal-body" id="reportBody"></div><div class="modal-foot"><button class="secondary" onclick="closeModal('reportOverlay')">Zamknij</button><button class="primary" onclick="printReport()">🖨️ Drukuj / PDF</button></div></div></div><script>
+const COLORS={'MBank Edyta':'#e53935','MBank Marcin':'#f2c94c','Millenium Edyta':'#8e44ad','Millenium Marcin':'#27ae60','Prywatne':'#00897b','Lekcja odwołana':'#3498db',Inne:'#d95776'};
 const KEY='moj_kalendarz_uczniow_v2';
-let data={students:[],events:[]};
+let data={students:[],events:[],dayNotes:{}};
 try { data=JSON.parse(localStorage.getItem(KEY)||'null')||data; } catch(e) { console.warn('Local storage unavailable; using in-memory data.'); }
+if(!data.dayNotes || typeof data.dayNotes!=='object') data.dayNotes={};
 function persist(){ try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){console.warn('Storage unavailable. Data remains for this session.');} }
 let current=new Date(),editEventId=null,editStudentId=null,calendarView='week';
 function saveData(){persist()}
@@ -180,9 +184,13 @@ function openPaymentPanel(){
  (unpaid.length?unpaid.map(e=>{let s=getStudent(e.studentId);return `<div class="lesson-row"><span><b>${esc(s?.name||'')}</b><br>${fmtDate(e.date)} ${e.time||''} · ${esc(e.subject)} · ${Number(e.price||0)} zł</span><button class="quick-pay" onclick="quickPay('${e.id}');openPaymentPanel()">✓ Zapłacone</button></div>`}).join(''):'<div class="empty-state">Wszystkie lekcje są opłacone 🎉</div>');
  document.getElementById('paymentOverlay').classList.add('open')
 }
+let noteDateKey='';
+function openDayNote(dateStr){noteDateKey=dateStr;document.getElementById('dayNoteDate').textContent=new Date(dateStr+'T12:00:00').toLocaleDateString('pl-PL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});document.getElementById('dayNoteText').value=data.dayNotes?.[dateStr]||'';document.getElementById('dayNoteOverlay').classList.add('open');setTimeout(()=>document.getElementById('dayNoteText').focus(),50)}
+function saveDayNote(){const text=document.getElementById('dayNoteText').value.trim();if(!data.dayNotes)data.dayNotes={};if(text)data.dayNotes[noteDateKey]=text;else delete data.dayNotes[noteDateKey];saveData();closeModal('dayNoteOverlay');renderCalendar()}
+
 function importData(){
  const input=document.createElement('input');input.type='file';input.accept='.json,application/json';
- input.onchange=()=>{const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.students)||!Array.isArray(x.events))throw Error();if(confirm('Import zastąpi obecną bazę danych. Kontynuować?')){data=x;saveData();renderStudents();renderCalendar();alert('Kopia została zaimportowana.')}}catch{alert('Nieprawidłowy plik kopii.')}};r.readAsText(file)};
+ input.onchange=()=>{const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.students)||!Array.isArray(x.events))throw Error();if(confirm('Import zastąpi obecną bazę danych. Kontynuować?')){data=x;if(!data.dayNotes)data.dayNotes={};saveData();renderStudents();renderCalendar();alert('Kopia została zaimportowana.')}}catch{alert('Nieprawidłowy plik kopii.')}};r.readAsText(file)};
  input.click();
 }
 function showMonthlyReport(){
@@ -220,7 +228,7 @@ function renderWeek(){
    const ev=data.events.filter(e=>e.date===iso&&e.status!=='cancelled');
    const paid=ev.filter(e=>e.paid==='paid'), unpaid=ev.filter(e=>e.paid!=='paid');
    const paidMoney=paid.reduce((a,e)=>a+Number(e.price||0),0), unpaidMoney=unpaid.reduce((a,e)=>a+Number(e.price||0),0);
-   h+=`<div class="day-summary-cell"><div class="day-summary-label">LEKCJE</div><div class="paid-count">✓ opłacone: ${paid.length} · ${paidMoney} zł</div><div class="unpaid-count">! nieopłacone: ${unpaid.length} · ${unpaidMoney} zł</div></div>`;
+   const note=String(data.dayNotes?.[iso]||''); h+=`<div class="day-summary-cell"><div class="day-summary-label">LEKCJE</div><div class="paid-count">✓ opłacone: ${paid.length} · ${paidMoney} zł</div><div class="unpaid-count">! nieopłacone: ${unpaid.length} · ${unpaidMoney} zł</div><button class="day-note-btn" onclick="event.stopPropagation();openDayNote('${iso}')" title="Notatka na ten dzień">＋</button>${note?`<div class="day-note-text has-note" title="${esc(note)}">📝 ${esc(note)}</div>`:''}</div>`;
  });
  h+='</div>';
  document.getElementById('calendarContainer').innerHTML=h;
@@ -247,7 +255,7 @@ function saveRepeatSettings(){
  document.getElementById('eRepeat').value=pendingRepeat;
  document.getElementById('eRepeatUntil').value=pendingRepeat==='none'?'':until;
  document.getElementById('repeatSummary').textContent=pendingRepeat==='none'?'Jednorazowo':repeatLabel(pendingRepeat)+' · do '+fmtDate(until);
- closeModal('repeatOverlay');
+ closeModal('repeatOverlay');closeModal('dayNoteOverlay');
 }
 function syncRepeatSummary(){
  const r=document.getElementById('eRepeat').value||'none',u=document.getElementById('eRepeatUntil').value||'';
@@ -294,7 +302,7 @@ function saveEvent(){
    data.events[i]={...old,...base};
    if(scope==='series')moveSeries(data.events[i],old.date,date,base.time);
  }else{data.events.push(base);addRecurringEvents(base)}
- saveData();closeModal('eventOverlay');closeModal('repeatOverlay');renderCalendar();renderStudents()
+ saveData();closeModal('eventOverlay');closeModal('repeatOverlay');closeModal('dayNoteOverlay');renderCalendar();renderStudents()
 }
 function addRecurringEvents(base){
  if(base.repeat==='none')return;
@@ -361,7 +369,7 @@ function renderStudents(){
  list.innerHTML=shown.length?shown.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>{let evs=data.events.filter(e=>e.studentId===s.id&&e.status!=='cancelled'),un=evs.filter(e=>e.paid!=='paid').length;return `<div class="student-card" onclick="openStudentModal('${s.id}')"><div class="student-main"><div class="avatar">${esc(s.name.split(' ').map(x=>x[0]).slice(0,2).join('').toUpperCase())}</div><div><b>${esc(s.name)}</b><div class="details">${esc(s.className||'')} ${s.phone?'· '+esc(s.phone):''}</div></div></div><div>${un?`<span class="badge unpaid">${un} nieopł.</span>`:'<span class="badge paid">Opłacone</span>'}</div></div>`}).join(''):'<div class="empty-state">Brak uczniów pasujących do wyszukiwania.</div>'
 }
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kalendarz-uczniow-kopia.json';a.click();URL.revokeObjectURL(a.href)}
-window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('eventOverlay');closeModal('studentOverlay');closeModal('repeatOverlay')}});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal('eventOverlay');closeModal('studentOverlay');closeModal('repeatOverlay');closeModal('dayNoteOverlay')}});
 let swipeStartX=0,swipeStartY=0,swipeTracking=false;
 const calendarSwipe=document.getElementById('calendarContainer');
 calendarSwipe.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;swipeStartX=e.touches[0].clientX;swipeStartY=e.touches[0].clientY;swipeTracking=true},{passive:true});
