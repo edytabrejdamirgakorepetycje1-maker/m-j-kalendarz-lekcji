@@ -1,9 +1,9 @@
 {
   "name": "Mój Kalendarz Lekcji",
-  "short_name": "Kalendarz",
-  "start_url": "./index.html?v=15",
+  "short_name": "Mój Kalendarz",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f6fb",
+  "background_color": "#cdd2df",
   "theme_color": "#6d5dfc",
   "icons": [
     {

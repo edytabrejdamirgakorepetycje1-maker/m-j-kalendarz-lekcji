@@ -1,0 +1,33 @@
+AKTUALIZACJA 15 — SYNCHRONIZACJA TELEFON ↔ iPAD
+
+1. Wgraj CAŁĄ zawartość tego folderu do GitHub Pages:
+   index.html
+   manifest.webmanifest
+   sw.js
+   icon-192.png
+   icon-512.png
+
+2. Użyj PRYWATNEGO repozytorium GitHub.
+
+3. Utwórz GitHub Fine-grained Personal Access Token z dostępem tylko
+   do tego repozytorium i uprawnieniem:
+   Contents: Read and write.
+
+4. Na TELEFONIE otwórz aplikację → „☁️ Synchronizacja” i wpisz:
+   - konto GitHub,
+   - nazwę repozytorium,
+   - token,
+   - zostaw „kalendarz-sync.json”.
+
+5. Zapisz i synchronizuj.
+
+6. Na iPADZIE otwórz tę samą aplikację → „☁️ Synchronizacja”
+   i wpisz te same dane.
+
+7. Od tej chwili zapis lekcji, uczniów, płatności i notatek jest
+   automatycznie wysyłany do wspólnej bazy GitHub.
+
+Token nie jest wpisany do kodu aplikacji i nie jest synchronizowany.
+Jest przechowywany lokalnie na każdym urządzeniu.
+
+Przed pierwszą synchronizacją warto zrobić „Eksport danych”.
