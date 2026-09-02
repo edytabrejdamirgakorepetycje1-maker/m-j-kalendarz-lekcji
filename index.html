@@ -176,7 +176,7 @@ function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function getStudent(id){return data.students.find(s=>s.id===id)}
 function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function fmtDate(s){return new Date(s+'T12:00:00').toLocaleDateString('pl-PL',{day:'2-digit',month:'2-digit',year:'numeric'})}
+function fmtDate(s){const d=dateOnly(s);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()}
 function mondayOf(d){let x=new Date(d);x.setHours(12,0,0,0);let n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);return x}
 function weekLabel(d){let a=mondayOf(d),b=new Date(a);b.setDate(b.getDate()+6);return a.toLocaleDateString('pl-PL',{day:'numeric',month:'long'})+' – '+b.toLocaleDateString('pl-PL',{day:'numeric',month:'long',year:'numeric'})}
 function showPage(page){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(page+'Page').classList.add('active');document.querySelectorAll('.nav button,.mobile-nav button').forEach(b=>b.classList.remove('active'));document.getElementById(page==='calendar'?'navCalendar':'navStudents').classList.add('active');document.getElementById(page==='calendar'?'mNavCalendar':'mNavStudents').classList.add('active');page==='students'?renderStudents():renderCalendar()}
