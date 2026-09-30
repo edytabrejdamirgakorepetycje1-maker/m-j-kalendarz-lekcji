@@ -187,7 +187,16 @@ function quickPay(id){
  const e=data.events.find(x=>x.id===id);if(!e)return;e.paid='paid';saveData();renderStudents();renderCalendar();if(editStudentId)openStudentModal(editStudentId);
 }
 function markEventPaid(){
- if(!editEventId)return;quickPay(editEventId);closeModal('eventOverlay');
+ const id=editClickedEventId||editEventId;
+ if(!id)return;
+ const e=data.events.find(x=>x.id===id);
+ if(!e)return;
+ e.paid='paid';
+ saveData();
+ closeModal('eventOverlay');
+ renderCalendar();
+ renderStudents();
+ if(editStudentId)openStudentModal(editStudentId);
 }
 function openPaymentPanel(){
  const unpaid=data.events.filter(e=>e.paid!=='paid'&&e.status!=='cancelled').sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
