@@ -532,7 +532,9 @@ function openStudentMonthModal(studentId, dateStr){
  }).join(''):`<div class="details" style="padding:10px 0">Brak wcześniejszych miesięcy.</div>`;
  document.getElementById('reportBody').innerHTML=`<h3 style="margin:0">Lekcje — ${esc(s.name)}</h3>
  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px">
-   <button id="studentMonthCurrentBtn" class="primary" type="button" onclick="switchStudentMonthView('current')">📅 Bieżący miesiąc</button>
+   <button class="primary" type="button" onclick="openStudentProgressReport('${s.id}')">📋 Raport postępów</button>
+   <button class="secondary" type="button" onclick="openStudentPaymentReport('${s.id}')">💰 Płatności ucznia</button>
+   <button id="studentMonthCurrentBtn" class="secondary" type="button" onclick="switchStudentMonthView('current')">📅 Bieżący miesiąc</button>
    <button id="studentMonthPreviousBtn" class="secondary" type="button" onclick="switchStudentMonthView('previous')">🗂️ Poprzednie miesiące</button>
  </div>
  <div id="studentMonthCurrentView">
@@ -553,6 +555,26 @@ function switchStudentMonthView(view){
  const isCurrent=view==='current';cur.style.display=isCurrent?'block':'none';prev.style.display=isCurrent?'none':'block';
  if(cb)cb.className=isCurrent?'primary':'secondary';if(pb)pb.className=isCurrent?'secondary':'primary';
 }
+
+function openStudentPaymentReport(studentId){
+ const s=getStudent(studentId);if(!s)return;
+ const now=new Date(),cy=now.getFullYear(),cm=now.getMonth();
+ const monthNames=['styczeń','luty','marzec','kwiecień','maj','czerwiec','lipiec','sierpień','wrzesień','październik','listopad','grudzień'];
+ const all=data.events.filter(e=>e.studentId===studentId);
+ const groups={};
+ all.forEach(e=>{const d=dateOnly(e.date),key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');(groups[key]??=[]).push(e)});
+ Object.values(groups).forEach(a=>a.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)));
+ const currentKey=cy+'-'+String(cm+1).padStart(2,'0');
+ const keys=Object.keys(groups).sort((a,b)=>b.localeCompare(a));
+ const rows=(arr)=>arr.length?`<table class="progress-table"><thead><tr><th>Data</th><th>Godzina</th><th>Status</th></tr></thead><tbody>${arr.map(e=>`<tr><td><b>${fmtDate(e.date)}</b></td><td>${esc(e.time||'')}</td><td><span class="badge ${e.status==='cancelled'?'cancel':e.paid==='paid'?'paid':'unpaid'}">${e.status==='cancelled'?'Odwołana':e.paid==='paid'?'Opłacona':'Nieopłacona'}</span></td></tr>`).join('')}</tbody></table>`:`<div class="details" style="padding:10px 0">Brak lekcji w tym miesiącu.</div>`;
+ const monthBlock=(key)=>{const [yy,mm]=key.split('-'),arr=groups[key]||[],normal=arr.filter(e=>e.status!=='cancelled'),paid=normal.filter(e=>e.paid==='paid').length,unpaid=normal.filter(e=>e.paid!=='paid').length,cancelled=arr.length-normal.length;return `<section class="progress-month"><h4 style="text-transform:capitalize">${monthNames[Number(mm)-1]} ${yy}</h4><div class="details" style="margin-bottom:8px">Lekcje: <b>${normal.length}</b> · <span style="color:#17834d">opłacone: <b>${paid}</b></span> · <span style="color:#bb4a37">nieopłacone: <b>${unpaid}</b></span>${cancelled?` · odwołane: <b>${cancelled}</b>`:''}</div>${rows(arr)}</section>`};
+ const currentHtml=groups[currentKey]?monthBlock(currentKey):`<section class="progress-month"><h4>${monthNames[cm]} ${cy}</h4>${rows([])}</section>`;
+ const prevKeys=keys.filter(k=>k!==currentKey);
+ const prevHtml=prevKeys.length?prevKeys.map(monthBlock).join(''):`<div class="details" style="padding:10px 0">Brak poprzednich miesięcy.</div>`;
+ document.getElementById('reportBody').innerHTML=`<div class="progress-report-head"><h3 style="margin:0">Płatności — ${esc(s.name)}</h3><div class="details" style="margin-top:4px">Sprawdzenie, które lekcje są opłacone, a które nie.</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px"><button class="secondary" type="button" onclick="openStudentProgressReport('${s.id}')">📋 Raport postępów</button><button id="paymentCurrentBtn" class="primary" type="button" onclick="switchStudentPaymentView('current')">📅 Bieżący miesiąc</button><button id="paymentPreviousBtn" class="secondary" type="button" onclick="switchStudentPaymentView('previous')">🗂️ Poprzednie miesiące</button></div><div id="paymentCurrentView">${currentHtml}</div><div id="paymentPreviousView" style="display:none">${prevHtml}</div>`;
+ document.getElementById('reportOverlay').classList.add('open');
+}
+function switchStudentPaymentView(view){const cur=document.getElementById('paymentCurrentView'),prev=document.getElementById('paymentPreviousView'),cb=document.getElementById('paymentCurrentBtn'),pb=document.getElementById('paymentPreviousBtn');if(!cur||!prev)return;const current=view==='current';cur.style.display=current?'block':'none';prev.style.display=current?'none':'block';if(cb)cb.className=current?'primary':'secondary';if(pb)pb.className=current?'secondary':'primary'}
 
 function openStudentModal(id=null){
  editStudentId=id;let s=id?getStudent(id):null;document.getElementById('studentModalTitle').textContent=s?'Karta ucznia':'Nowy uczeń';
