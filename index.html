@@ -228,17 +228,46 @@ function renderCalendar(){document.getElementById('weekTitle').textContent=weekL
 function renderWeek(){
  const a=mondayOf(current),days=[];for(let i=0;i<7;i++){let d=new Date(a);d.setDate(a.getDate()+i);days.push(d)}
  let h='<div class="week-calendar"><div class="head"></div>'+days.map(d=>`<div class="head ${d.toISOString().slice(0,10)===todayStr()?'today-head':''}">${d.toLocaleDateString('pl-PL',{weekday:'short'})}<br><b>${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}</b></div>`).join('');
+ // Układamy nachodzące na siebie lekcje obok siebie, zamiast nakładać jedną na drugą.
+ const dayLayouts={};
+ days.forEach(d=>{
+   const iso=d.toISOString().slice(0,10);
+   const evs=data.events.filter(e=>e.date===iso&&e.time);
+   const items=evs.map(e=>{
+     const start=(Number(e.time.slice(0,2))*60)+(Number(e.time.slice(3,5))||0);
+     const end=start+Number(e.duration||60);
+     return {e,start,end,lane:0,group:0};
+   }).sort((a,b)=>a.start-b.start||a.end-b.end);
+   let groupId=0,groupEnd=-1;
+   items.forEach(item=>{
+     if(item.start>=groupEnd){groupId++;groupEnd=item.end;}else{groupEnd=Math.max(groupEnd,item.end);}
+     item.group=groupId;
+   });
+   const groups={};items.forEach(item=>(groups[item.group]??=[]).push(item));
+   Object.values(groups).forEach(group=>{
+     const lanes=[];
+     group.forEach(item=>{
+       let lane=0;while(lanes[lane]!==undefined&&lanes[lane]>item.start)lane++;
+       item.lane=lane;lanes[lane]=item.end;
+     });
+     const count=Math.max(1,lanes.length);
+     group.forEach(item=>{item.count=count;});
+   });
+   dayLayouts[iso]=items;
+ });
  for(let hour=6;hour<=22;hour++){
    h+=`<div class="time-cell">${String(hour).padStart(2,'0')}:00</div>`;
    days.forEach(d=>{
      const iso=d.toISOString().slice(0,10);
      h+=`<div class="day-cell" data-date="${iso}" data-hour="${hour}" onclick="slotClick('${iso}',${hour})">`;
-     data.events.filter(e=>e.date===iso && e.time && Number(e.time.slice(0,2))===hour).forEach(e=>{
-       const s=getStudent(e.studentId);if(!s)return;
+     (dayLayouts[iso]||[]).filter(item=>Number(item.e.time.slice(0,2))===hour).forEach(item=>{
+       const e=item.e,s=getStudent(e.studentId);if(!s)return;
        const mins=Number((e.time||'00:00').slice(3))||0,top=Math.round(mins/60*64),ht=Math.max(38,Math.round((e.duration||60)/60*64)-3);
+       const count=item.count||1,lane=item.lane||0;
+       const gap=3,left=`calc(${(lane*100/count).toFixed(4)}% + ${gap}px)`,right=`calc(${((count-lane-1)*100/count).toFixed(4)}% + ${gap}px)`;
        const cls=e.status==='cancelled'?'cancelled-event':e.paid==='paid'?'paid-event':'';
        const bg=e.status==='cancelled'?'#f2c94c':e.paid==='paid'?'#9699a3':(COLORS[e.subject]||COLORS.Inne);
-       h+=`<div class="event ${cls}" style="top:${top}px;height:${ht}px;background:${bg}" onclick="event.stopPropagation();openEventModal('${e.id}')"><strong onclick="event.stopPropagation();openStudentMonthModal('${e.studentId}','${e.date}')">${esc(s.name)}</strong><div class="sub">${esc(e.time)} · ${esc(e.subject)} ${e.paid==='paid'?'✓':''}</div></div>`;
+       h+=`<div class="event ${cls}" style="top:${top}px;height:${ht}px;left:${left};right:${right};background:${bg}" onclick="event.stopPropagation();openEventModal('${e.id}')"><strong onclick="event.stopPropagation();openStudentMonthModal('${e.studentId}','${e.date}')">${esc(s.name)}</strong><div class="sub">${esc(e.time)} · ${esc(e.subject)} ${e.paid==='paid'?'✓':''}</div></div>`;
      });
      h+='</div>';
    });
