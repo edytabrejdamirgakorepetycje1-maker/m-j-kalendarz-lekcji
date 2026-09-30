@@ -286,7 +286,8 @@ function openEventModal(id=null,date=null,time=null){
  document.getElementById('eventModalTitle').textContent=clicked?'Edytuj lekcję':'Nowa lekcja';
  const sel=document.getElementById('eStudent');sel.innerHTML=data.students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
  if(!data.students.length)sel.innerHTML='<option value="">Najpierw dodaj ucznia</option>';
- document.getElementById('eDate').value=e?.date||date||todayStr();document.getElementById('eTime').value=e?.time||time||'16:00';
+ const dateTimeSource=clicked||e;
+ document.getElementById('eDate').value=dateTimeSource?.date||date||todayStr();document.getElementById('eTime').value=dateTimeSource?.time||time||'16:00';
  document.getElementById('eDuration').value=e?.duration||60;document.getElementById('eSubject').value=e?.subject||'MBank Edyta';
  document.getElementById('eRepeat').value=e?.repeat||'none';document.getElementById('eRepeatUntil').value=e?.repeatUntil||'';
  syncRepeatSummary();
@@ -314,18 +315,34 @@ function askMoveScope(e,oldDate,oldTime,newDate,newTime){
 }
 function saveEvent(){
  const studentId=document.getElementById('eStudent').value;if(!studentId){alert('Dodaj najpierw ucznia.');return}
- const repeat=document.getElementById('eRepeat').value,repeatUntil=document.getElementById('eRepeatUntil').value||'',date=document.getElementById('eDate').value;
+ const repeat=document.getElementById('eRepeat').value,repeatUntil=document.getElementById('eRepeatUntil').value||'',date=document.getElementById('eDate').value,time=document.getElementById('eTime').value;
  if(repeat!=='none'&&(!repeatUntil||repeatUntil<date)){alert('Wybierz datę zakończenia cyklu nie wcześniejszą niż data pierwszej lekcji.');return}
  const old=editEventId?data.events.find(x=>x.id===editEventId):null;
+ const clicked=editClickedEventId?data.events.find(x=>x.id===editClickedEventId):old;
  const selectedSubject=document.getElementById('eSubject').value;const selectedStatus=selectedSubject==='Lekcja odwołana'?'cancelled':document.getElementById('eStatus').value;
- const base={id:editEventId||uid(),studentId,subject:selectedSubject,date,time:document.getElementById('eTime').value,duration:Number(document.getElementById('eDuration').value||60),repeat,repeatUntil,paid:document.getElementById('ePaid').value,status:selectedStatus,price:Number(document.getElementById('ePrice').value||0),note:document.getElementById('eNote').value,boardLink:document.getElementById('eBoardLink').value.trim()};
+ const base={id:editEventId||uid(),studentId,subject:selectedSubject,date,time,duration:Number(document.getElementById('eDuration').value||60),repeat,repeatUntil,paid:document.getElementById('ePaid').value,status:selectedStatus,price:Number(document.getElementById('ePrice').value||0),note:document.getElementById('eNote').value,boardLink:document.getElementById('eBoardLink').value.trim()};
  if(!editEventId){
    data.events.push(base);
    addRecurringEvents(base);
  }else if(old && (old.repeat!=='none' || data.events.some(x=>x.parentId===old.id))){
-   // EDYCJA CAŁEJ SERII. Nie kasujemy istniejących danych lekcji.
-   // Zmieniamy tylko definicję serii i dodajemy/usuwamy przyszłe wystąpienia.
-   updateRecurringSeries(old,base);
+   const oldDate=clicked?.date||old.date,oldTime=clicked?.time||old.time;
+   const moved=oldDate!==date||oldTime!==time;
+   const group=seriesEvents(clicked||old),hasSeries=group.length>1||old.repeat!=='none'||!!old.parentId;
+   let scope='series';
+   if(hasSeries&&moved){
+     scope=confirm('Ta lekcja należy do serii.\n\nOK — zmień termin/godzinę CAŁEJ SERII\nAnuluj — zmień tylko TĘ JEDNĄ LEKCJĘ')?'series':'single';
+   }
+   if(scope==='single' && moved){
+     const target=clicked||old;
+     if(target){
+       target.date=date;target.time=time;
+       // Pozostałe dane tej konkretnej lekcji pozostają bez zmian.
+       target.studentId=studentId;target.subject=selectedSubject;target.duration=base.duration;target.paid=base.paid;target.status=selectedStatus;target.price=base.price;target.note=base.note;target.boardLink=base.boardLink;
+     }
+   }else{
+     // Zmiana całej serii — zachowujemy indywidualne dane poszczególnych lekcji.
+     updateRecurringSeries(old,base);
+   }
  }else{
    const i=data.events.findIndex(e=>e.id===editEventId);
    if(i>=0)data.events[i]={...old,...base};
