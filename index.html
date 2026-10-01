@@ -225,21 +225,24 @@ function openFullMonthlyReport(year,month,auto=false){
  const evs=data.events.filter(e=>{const d=dateOnly(e.date);return d.getFullYear()===y&&d.getMonth()===m&&e.status!=='cancelled'});
  const groups={};
  evs.forEach(e=>{const subject=e.subject||'Inne'; if(!groups[subject])groups[subject]={}; const sid=e.studentId||'unknown'; if(!groups[subject][sid])groups[subject][sid]=[]; groups[subject][sid].push(e)});
- const subjectOrder=[...subjects,...Object.keys(groups).filter(x=>!subjects.includes(x)).sort((a,b)=>a.localeCompare(b))];
+ const subjectOrder=[...subjects,...Object.keys(groups).filter(x=>!subjects.includes(x)).sort((a,b)=>a.localeCompare(b,'pl'))];
  let sections='';
  subjectOrder.forEach(subject=>{
-   const g=groups[subject]; if(!g||!Object.keys(g).length)return;
-   const cards=Object.keys(g).map(sid=>{
+   const g=groups[subject]||{};
+   const ids=Object.keys(g).sort((a,b)=>{const sa=getStudent(a),sb=getStudent(b);return String(sa?.name||'').localeCompare(String(sb?.name||''),'pl',{sensitivity:'base'})});
+   const cards=ids.map(sid=>{
      const s=getStudent(sid); if(!s)return '';
      const arr=g[sid].slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
      const paid=arr.filter(e=>e.paid==='paid').length, unpaid=arr.length-paid;
      return `<div class="full-report-student"><div class="full-report-student-head"><b>${esc(s.name)}</b><span>${arr.length} lekcji</span></div><div class="full-report-stats"><span class="badge paid">✓ Opłacone: ${paid}</span><span class="badge unpaid">! Nieopłacone: ${unpaid}</span></div><div class="details" style="margin-top:7px">${arr.map(e=>`${fmtDate(e.date)} · ${esc(e.time||'')}${e.paid==='paid'?' · ✓':''}`).join('<br>')}</div></div>`;
    }).join('');
    const total=Object.values(g).reduce((a,v)=>a+v.length,0), paid=Object.values(g).flat().filter(e=>e.paid==='paid').length;
-   sections+=`<section class="full-report-subject"><h3><span class="dot" style="background:${COLORS[subject]||'#777'}"></span>${esc(subject)} <span class="details">— ${total} lekcji, ${paid} opłaconych, ${total-paid} nieopłaconych</span></h3><div class="full-report-grid">${cards}</div></section>`;
+   sections+=`<section class="full-report-subject"><h3><span class="dot" style="background:${COLORS[subject]||'#777'}"></span>${esc(subject)} <span class="details">— ${total} lekcji, ${paid} opłaconych, ${total-paid} nieopłaconych</span></h3>${cards?`<div class="full-report-grid">${cards}</div>`:'<div class="empty-state">Brak lekcji w tym rodzaju spotkania w tym miesiącu.</div>'}</section>`;
  });
+ const unpaidRows=evs.filter(e=>e.paid!=='paid').map(e=>{const s=getStudent(e.studentId);return {name:s?.name||'Nieznany uczeń',date:e.date,time:e.time||'',subject:e.subject||'Inne'}}).sort((a,b)=>a.name.localeCompare(b.name,'pl',{sensitivity:'base'})||a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+ const unpaidTable=unpaidRows.length?`<section class="full-report-subject" style="margin-top:18px"><h3>⚠️ Nieopłacone lekcje</h3><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;background:#fff"><thead><tr><th style="text-align:left;padding:10px;border-bottom:1px solid #ddd">Uczeń</th><th style="text-align:left;padding:10px;border-bottom:1px solid #ddd">Data</th><th style="text-align:left;padding:10px;border-bottom:1px solid #ddd">Godzina</th><th style="text-align:left;padding:10px;border-bottom:1px solid #ddd">Rodzaj spotkania</th></tr></thead><tbody>${unpaidRows.map(r=>`<tr><td style="padding:9px 10px;border-bottom:1px solid #eee"><b>${esc(r.name)}</b></td><td style="padding:9px 10px;border-bottom:1px solid #eee">${fmtDate(r.date)}</td><td style="padding:9px 10px;border-bottom:1px solid #eee">${esc(r.time)}</td><td style="padding:9px 10px;border-bottom:1px solid #eee">${esc(r.subject)}</td></tr>`).join('')}</tbody></table></div></section>`:'<section class="full-report-subject" style="margin-top:18px"><h3>✓ Nieopłacone lekcje</h3><div class="empty-state">Brak nieopłaconych lekcji w tym miesiącu.</div></section>';
  const allPaid=evs.filter(e=>e.paid==='paid').length, allUnpaid=evs.length-allPaid;
- document.getElementById('reportBody').innerHTML=`<div class="progress-report-head"><h2 style="margin:0">📋 Pełny raport — ${esc(monthLabelPL(y,m))}</h2><div class="details" style="margin-top:5px">Wszyscy uczniowie, pogrupowani według rodzaju spotkania. Odwołane lekcje nie są wliczane.</div></div><div class="summary-box" style="margin:14px 0"><b>Łącznie: ${evs.length} lekcji</b> · <span class="badge paid">opłacone: ${allPaid}</span> <span class="badge unpaid">nieopłacone: ${allUnpaid}</span></div>${sections||'<div class="empty-state">Brak lekcji w tym miesiącu.</div>'}`;
+ document.getElementById('reportBody').innerHTML=`<div class="progress-report-head"><h2 style="margin:0">📋 Pełny raport — ${esc(monthLabelPL(y,m))}</h2><div class="details" style="margin-top:5px">Wszystkie rodzaje spotkań. Uczniowie w każdym rodzaju są ustawieni alfabetycznie. Odwołane lekcje nie są wliczane.</div></div><div class="summary-box" style="margin:14px 0"><b>Łącznie: ${evs.length} lekcji</b> · <span class="badge paid">opłacone: ${allPaid}</span> <span class="badge unpaid">nieopłacone: ${allUnpaid}</span></div>${sections}${unpaidTable}`;
  document.getElementById('reportOverlay').classList.add('open');
 }
 function openPreviousMonthFullReport(){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-1);openFullMonthlyReport(d.getFullYear(),d.getMonth())}
